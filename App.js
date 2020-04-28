@@ -6,11 +6,14 @@ import { createStore, combineReducers } from "redux";
 import { Provider } from "react-redux";
 
 import AppNavigator from "./navigation/AppNavigator";
-import companyReducer from "./store/reducers/companies";
+import { newCompanyReducer } from "./store/reducers/companies";
+import reducers from "./store/reducers/companies";
 
 const rootReducer = combineReducers({
-  company: companyReducer
+  company: newCompanyReducer
 })
+
+
 
 const store = createStore(rootReducer);
 

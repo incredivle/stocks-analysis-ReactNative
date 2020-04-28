@@ -18,7 +18,7 @@ import { useSelector } from "react-redux";
 import { StackRouter } from "react-navigation";
 
 import Colors from "../constants/Colors";
-import { addNewCompany } from "../store/actions/companies"
+import { addNewCompany } from "../store/actions/companies";
 
 // const newData = useSelector(state => state.company.company);
 

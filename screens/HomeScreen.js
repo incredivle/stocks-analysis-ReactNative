@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { View, FlatList, StyleSheet, TouchableOpacity } from "react-native";
 import { Container, Text, Content, Button } from "native-base";
-import { useSelector } from "react-redux";
+import { useSelector, connect } from "react-redux";
 
 import Colors from "../constants/Colors";
 import CompanyItem from "../components/CompanyItem";
@@ -84,4 +84,9 @@ const styles = StyleSheet.create({
   }
 });
 
-export default HomeScreen;
+const mapStateToProps = (state) => {
+  console.log(state);
+  return state;
+}
+
+export default connect(mapStateToProps)(HomeScreen);
