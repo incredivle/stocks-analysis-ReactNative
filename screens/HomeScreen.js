@@ -6,57 +6,68 @@ import { useSelector, connect } from "react-redux";
 import Colors from "../constants/Colors";
 import CompanyItem from "../components/CompanyItem";
 
-
 const HomeScreen = (props) => {
-  const [companies, setCompanies] = useState([{id: 'a', name: 'Google'}, {id: 'b', name: 'Apple'}, {id: 'b', name: "Microsoft"}]);
-// const [newData, setNewData] = useState({});
+  const [companies, setCompanies] = useState([]);
 
-// const newData = useSelector(state => state.company.company);
-// console.log("newData " + newData);
+  // console.log(props.company);
 
-// const newCompanyHandler = (companyData) => {
-//     console.log(companyData)
-// }
+ 
+  //   if (props.company != null){
+  //     setCompanies([...companies, props.company]);
+  //     console.log(companies);
+  // }
+
+  console.log(companies);
+
+  useEffect(() => {
+      if (props.company != null){
+      
+        setCompanies(companies.concat(props.company)); 
+        
+      }
+      
+  }, [props.company])
 
   if (companies.length === 0) {
     return (
-      
-        <Container>
-          <Content contentContainerStyle={styles.screen}>
-            <Text>Welcome to Invester!</Text>
-            <Text>Short explanation about the purpose of the app</Text>
-            <Button rounded style={styles.buttonOne} onPress={() => {
-                props.navigation.navigate({routeName: 'AddCompanyScreen'});
-            }}>
-              <Text>New Company</Text>
-            </Button>
-            <Button rounded bordered style={styles.buttonTwo} onPress={() => {
-                props.navigation.navigate({routeName: 'AboutScreen'});
-            }}>
-              <Text style={styles.buttonText}>More Info</Text>
-            </Button>
-          </Content>
-        </Container>
-      
+      <Container>
+        <Content contentContainerStyle={styles.screen}>
+          <Text>Welcome to Invester!</Text>
+          <Text>Short explanation about the purpose of the app</Text>
+          <Button
+            rounded
+            style={styles.buttonOne}
+            onPress={() => {
+              props.navigation.navigate({ routeName: "AddCompanyScreen" });
+            }}
+          >
+            <Text>New Company</Text>
+          </Button>
+          <Button
+            rounded
+            bordered
+            style={styles.buttonTwo}
+            onPress={() => {
+              props.navigation.navigate({ routeName: "AboutScreen" });
+            }}
+          >
+            <Text style={styles.buttonText}>More Info</Text>
+          </Button>
+        </Content>
+      </Container>
     );
   } else {
     return (
-      
-    
-            <View>
-            <FlatList
-            data={companies}
-            renderItem={({item}) => (
-                  <CompanyItem name={item.name}/>
-                // <Text>{item.name}</Text>
-            )}
-            keyExtractor={ (item, index) => index.toString() }
-            
-            />
-            </View>
-            
-         
-      
+      <View>
+        <FlatList
+          data={companies}
+          renderItem={({ item }) => (
+            <CompanyItem name={item.stockName} />
+            // <Text>{item.name}</Text>
+          )}
+          keyExtractor={(item, index) => index.toString()}
+        />
+      </View>
     );
   }
 };
@@ -70,23 +81,24 @@ const styles = StyleSheet.create({
   buttonOne: {
     backgroundColor: Colors.primaryColor,
     margin: 10,
-    width: '50%',
+    width: "50%",
     justifyContent: "center",
   },
   buttonTwo: {
-      borderColor: Colors.primaryColor,
-      margin: 10,
-      width: '50%',
-      justifyContent: "center", 
+    borderColor: Colors.primaryColor,
+    margin: 10,
+    width: "50%",
+    justifyContent: "center",
   },
   buttonText: {
-      color: Colors.primaryColor
-  }
+    color: Colors.primaryColor,
+  },
 });
 
+// This function allows the returned state to be under props in the HomeScreen component, ie. props.company
 const mapStateToProps = (state) => {
-  console.log(state);
-  return state;
-}
+  // console.log(state.company);
+  return { company: state.company };
+};
 
 export default connect(mapStateToProps)(HomeScreen);

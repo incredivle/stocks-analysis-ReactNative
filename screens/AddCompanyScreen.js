@@ -14,19 +14,16 @@ import {
   Body,
 } from "native-base";
 import axios from "axios";
-import { useSelector } from "react-redux";
+import { useSelector, connect } from "react-redux";
 import { StackRouter } from "react-navigation";
 
 import Colors from "../constants/Colors";
 import { addNewCompany } from "../store/actions/companies";
 
-// const newData = useSelector(state => state.company.company);
+
 
 const AddCompanyScreen = (props) => {
 
-    console.log(props);
-
-    const dispatch = useDispatch();
 
   const [newCompany, setNewCompany] = useState("");
   const [companyData, setCompanyData] = useState({});
@@ -46,19 +43,26 @@ const AddCompanyScreen = (props) => {
       });
   };
 
-  const saveHandler = useCallback(() => {
-      //send back to home page
-    console.log(newCompany);
-    dispatch(addNewCompany(newCompany));
-    
 
-      //save to database
-  }, [dispatch, newCompany]);
+  const saveHandler = () => {
+    props.addNewCompany(companyData);
+    setDisplayData(false);
+    setNewCompany("");
+    props.navigation.navigate({routeName: "Home"});
+
+    //save to database
+
+    //navigate back to home page
+  }
 
   const discardHandler = () => {
       // Set state to be an empty object
       setCompanyData({});
+      setDisplayData(false);
+      setNewCompany("");
   }
+
+  
 
   if (!displayData) {
     return (
@@ -172,4 +176,11 @@ const styles = StyleSheet.create({
   },
 });
 
-export default AddCompanyScreen;
+const mapStateToProps = state => {
+  // console.log(state.company);
+  return {company: state.company}
+}
+
+export default connect(mapStateToProps, {
+  addNewCompany: addNewCompany
+})(AddCompanyScreen);
