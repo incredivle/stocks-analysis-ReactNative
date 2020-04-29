@@ -156,6 +156,7 @@ const styles = StyleSheet.create({
   },
   submitButton: {
     backgroundColor: Colors.primaryColor,
+    borderColor: Colors.primaryColor,
     margin: 10,
     width: "50%",
     justifyContent: "center",
@@ -170,6 +171,7 @@ const styles = StyleSheet.create({
   },
   optionsButton: {
     backgroundColor: Colors.primaryColor,
+    borderColor: Colors.primaryColor,
     margin: 10,
     width: "30%",
     justifyContent: "center",

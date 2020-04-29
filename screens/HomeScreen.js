@@ -62,7 +62,7 @@ const HomeScreen = (props) => {
         <FlatList
           data={companies}
           renderItem={({ item }) => (
-            <CompanyItem name={item.stockName} />
+            <CompanyItem name={item.data.stockName} />
             // <Text>{item.name}</Text>
           )}
           keyExtractor={(item, index) => index.toString()}
