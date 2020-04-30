@@ -25,13 +25,22 @@ import { combineReducers } from "redux";
 export const newCompanyReducer = ( companyToSave=null, action) => {
     if(action.type === 'NEW_COMPANY'){
         return action.payload;
-    }
+    }  
 
     return companyToSave;
 };
 
+export const fetchCompaniesReducer = ( companies=null, action) => {
+    if (action.type === "FETCH_SAVED_COMPANIES"){
+        return action.companies.filter(company => company.userId === 'u1');
+    }
+
+    return companies
+}
+
 const reducers = combineReducers({
-    newCompany: newCompanyReducer
+    newCompany: newCompanyReducer,
+    fetchCompanies: fetchCompaniesReducer
 })
 
 export default reducers;

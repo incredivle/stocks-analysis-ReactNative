@@ -8,10 +8,12 @@ import ReduxThunk from "redux-thunk";
 
 import AppNavigator from "./navigation/AppNavigator";
 import { newCompanyReducer } from "./store/reducers/companies";
+import { fetchCompaniesReducer } from "./store/reducers/companies";
 import reducers from "./store/reducers/companies";
 
 const rootReducer = combineReducers({
-  company: newCompanyReducer
+  company: newCompanyReducer,
+  fetchCompanies: fetchCompaniesReducer
 })
 
 

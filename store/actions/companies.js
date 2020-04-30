@@ -12,6 +12,27 @@
 //     };
 // };
 
+import Company from "../../models/company";
+
+export const fetchSavedCompanies = () => {
+    return async dispatch => {
+
+        const response = await fetch("https://stocks-react-native.firebaseio.com/companies.json");
+
+        const resData = await response.json();
+        
+        const loadedCompanies = [];
+
+        for (const key in resData){
+            loadedCompanies.push(new Company (key, 'u1', resData[key]))
+        }
+        dispatch({
+            type: 'FETCH_SAVED_COMPANIES',
+            companies: loadedCompanies
+        })
+    }
+}
+
 export const addNewCompany = (data) => {
     return async dispatch => {
         // any async code you want

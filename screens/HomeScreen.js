@@ -1,34 +1,35 @@
 import React, { useState, useEffect } from "react";
 import { View, FlatList, StyleSheet, TouchableOpacity } from "react-native";
 import { Container, Text, Content, Button } from "native-base";
-import { useSelector, connect } from "react-redux";
+import { useSelector, connect, useDispatch } from "react-redux";
 
 import Colors from "../constants/Colors";
 import CompanyItem from "../components/CompanyItem";
+import { fetchSavedCompanies } from "../store/actions/companies";
 
 const HomeScreen = (props) => {
-  const [companies, setCompanies] = useState([]);
+  
 
-  // console.log(props.company);
+ const dispatch = useDispatch();
 
- 
-  //   if (props.company != null){
-  //     setCompanies([...companies, props.company]);
-  //     console.log(companies);
-  // }
+ useEffect(() => {
+   dispatch(fetchSavedCompanies());
+ }, [dispatch, props.savedCompanies]);
 
-  console.log(companies);
+//  const [companies, setCompanies] = useState([props.savedCompanies]);
 
-  useEffect(() => {
-      if (props.company != null){
+  // useEffect(() => {
+  //     if (props.company != null){
       
-        setCompanies(companies.concat(props.company)); 
+  //       props.savedCompanies.concat(props.company); 
         
-      }
+  //     }
       
-  }, [props.company])
+  // }, [props.company])
 
-  if (companies.length === 0) {
+
+
+  if (props.savedCompanies === null || props.savedCompanies.length === 0) {
     return (
       <Container>
         <Content contentContainerStyle={styles.screen}>
@@ -60,7 +61,7 @@ const HomeScreen = (props) => {
     return (
       <View>
         <FlatList
-          data={companies}
+          data={props.savedCompanies}
           renderItem={({ item }) => (
             <CompanyItem name={item.data.stockName} />
             // <Text>{item.name}</Text>
@@ -97,8 +98,9 @@ const styles = StyleSheet.create({
 
 // This function allows the returned state to be under props in the HomeScreen component, ie. props.company
 const mapStateToProps = (state) => {
-  // console.log(state.company);
-  return { company: state.company };
+  
+  return { company: state.company, savedCompanies: state.fetchCompanies };
+  
 };
 
 export default connect(mapStateToProps)(HomeScreen);
