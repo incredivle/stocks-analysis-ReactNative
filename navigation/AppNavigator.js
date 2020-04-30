@@ -1,13 +1,14 @@
 import React from 'react';
 import { createStackNavigator } from 'react-navigation-stack';
 import { createBottomTabNavigator } from 'react-navigation-tabs';
-import { createAppContainer } from 'react-navigation';
+import { createAppContainer, createSwitchNavigator } from 'react-navigation';
 import { Ionicons } from '@expo/vector-icons';
 
 import HomeScreen from "../screens/HomeScreen";
 import CompanyDetails from "../screens/CompanyDetailsScreen";
 import AddCompany from "../screens/AddCompanyScreen";
 import About from "../screens/AboutScreen";
+import AuthScreen from "../screens/AuthScreen";
 import Colors from "../constants/Colors";
 
 const AppNavigator = createStackNavigator({
@@ -51,4 +52,9 @@ const TabNavigator = createBottomTabNavigator({
     }
 });
 
-export default createAppContainer(TabNavigator);
+const MainNavigator = createSwitchNavigator({
+    Auth: AuthScreen,
+    App: TabNavigator
+})
+
+export default createAppContainer(MainNavigator);

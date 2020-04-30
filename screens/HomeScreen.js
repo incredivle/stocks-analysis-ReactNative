@@ -8,26 +8,11 @@ import CompanyItem from "../components/CompanyItem";
 import { fetchSavedCompanies } from "../store/actions/companies";
 
 const HomeScreen = (props) => {
-  
+  const dispatch = useDispatch();
 
- const dispatch = useDispatch();
-
- useEffect(() => {
-   dispatch(fetchSavedCompanies());
- }, [dispatch, props.savedCompanies]);
-
-//  const [companies, setCompanies] = useState([props.savedCompanies]);
-
-  // useEffect(() => {
-  //     if (props.company != null){
-      
-  //       props.savedCompanies.concat(props.company); 
-        
-  //     }
-      
-  // }, [props.company])
-
-
+  useEffect(() => {
+    dispatch(fetchSavedCompanies());
+  }, [dispatch, props.savedCompanies]);
 
   if (props.savedCompanies === null || props.savedCompanies.length === 0) {
     return (
@@ -98,9 +83,7 @@ const styles = StyleSheet.create({
 
 // This function allows the returned state to be under props in the HomeScreen component, ie. props.company
 const mapStateToProps = (state) => {
-  
   return { company: state.company, savedCompanies: state.fetchCompanies };
-  
 };
 
 export default connect(mapStateToProps)(HomeScreen);
