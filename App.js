@@ -6,7 +6,7 @@ import { createStore, combineReducers, applyMiddleware } from "redux";
 import { Provider } from "react-redux";
 import ReduxThunk from "redux-thunk";
 
-import AppNavigator from "./navigation/AppNavigator";
+import MainNavigator from "./navigation/AppNavigator";
 import { newCompanyReducer } from "./store/reducers/companies";
 import { fetchCompaniesReducer } from "./store/reducers/companies";
 import reducers from "./store/reducers/companies";
@@ -41,5 +41,5 @@ export default function App() {
     );
   }
 
-  return <Provider store={store}><AppNavigator /></Provider>;
+  return <Provider store={store}><MainNavigator /></Provider>;
 }

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   View,
   Text,
@@ -6,64 +6,114 @@ import {
   StyleSheet,
   TouchableOpacity,
   KeyboardAvoidingView,
-  ScrollView
+  ScrollView,
 } from "react-native";
-import {Container, Content, Form, Input, Item, Button} from "native-base";
+import { Container, Content, Form, Input, Item, Button } from "native-base";
+import { useDispatch } from "react-redux";
 
 import Colors from "../constants/Colors";
+import AuthForm from "../components/AuthForm";
+import * as authActions from "../store/actions/auth";
 
-// Need to do error checking on forms. Custom component maybe? 
+// Need to do error checking on forms. Custom component maybe?
 
 const AuthScreen = (props) => {
-  return (
-    <KeyboardAvoidingView behavior="padding" keyboardVerticalOffset={50}>
-      <Container>
-        <ScrollView>
-          <Content contentContainerStyle={styles.screen}>
-            <Form>
-              <Item>
-                <Input
-                  blurOnSubmit
-                  autoCapitalize="characters"
-                  autoCorrect={false}
-                  autoCompleteType="off"
-                  placeholder="Email"
-                  keyboardType="email-address"
-                  onChangeText={() => {}}
-                  //value
-                />
-              </Item>
-              <Item>
-                <Input
-                  blurOnSubmit
-                  autoCorrect={false}
-                  autoCompleteType="off"
-                  placeholder="Password"
-                  keyboardType="default"
-                  secureTextEntry
-                  onChangeText={() => {}}
-                  //value
-                />
-              </Item>
-            </Form>
+  const [signUpView, setSignUpView] = useState(false);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const changeEmailHandler = (inputText) => {
+    setEmail(inputText);
+
+  };
+
+  const changePasswordHandler = (inputText) => {
+    setPassword(inputText);
+  };
+
+  const handleLoginSubmit = () => {
+
+    console.log(email, password)
+  }
+
+  const dispatch = useDispatch();
+
+  const signUpHandler = () => {
+    dispatch(
+      authActions.signup(
+        email,
+        password
+      )
+    );
+  };
+
+  if (!signUpView) {
+    return (
+      <KeyboardAvoidingView
+        behavior={Platform.OS == "ios" ? "padding" : "height"}
+        style={styles.screen}
+      >
+        <Content>
+          <AuthForm
+            emailValue={email}
+            passwordValue={password}
+            changeEmailHandler={changeEmailHandler}
+            changePasswordHandler={changePasswordHandler}
+          />
+          <View style={styles.submitButtonContainer}>
             <Button
               rounded
               bordered
               style={styles.submitButton}
-              onPress={() => {}}
+              onPress={() => {handleLoginSubmit()}}
             >
               <Text style={styles.submitButtonText}>Submit</Text>
             </Button>
-          </Content>
-        </ScrollView>
-      </Container>
-    </KeyboardAvoidingView>
-  );
+          </View>
+          <View style={styles.signUp}>
+            <Text>Don't have an account?</Text>
+            <TouchableOpacity onPress={() => setSignUpView(true)}>
+              <Text style={styles.signUpButton}>Sign up.</Text>
+            </TouchableOpacity>
+          </View>
+        </Content>
+      </KeyboardAvoidingView>
+    );
+  } else {
+    return (
+      <KeyboardAvoidingView
+        behavior={Platform.OS == "ios" ? "padding" : "height"}
+        style={styles.screen}
+      >
+        <Content>
+          <AuthForm 
+          emailValue={email}
+          passwordValue={password}
+          changeEmailHandler={changeEmailHandler}
+          changePasswordHandler={changePasswordHandler}/>
+          <View style={styles.submitButtonContainer}>
+            <Button
+              rounded
+              bordered
+              style={styles.submitButton}
+              onPress={() => {signUpHandler()}}
+            >
+              <Text style={styles.submitButtonText}>Sign up</Text>
+            </Button>
+          </View>
+        </Content>
+      </KeyboardAvoidingView>
+    );
+  }
 };
 
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
+    justifyContent: "center",
+    // alignItems: "center",
+  },
+  submitButtonContainer: {
     justifyContent: "center",
     alignItems: "center",
   },
@@ -73,7 +123,7 @@ const styles = StyleSheet.create({
     margin: 10,
     width: "50%",
     justifyContent: "center",
-    // alignItems: 'center'
+    alignItems: "center",
   },
   submitButtonText: {
     color: "white",
@@ -88,6 +138,15 @@ const styles = StyleSheet.create({
     margin: 10,
     width: "30%",
     justifyContent: "center",
+  },
+  signUp: {
+    // flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  signUpButton: {
+    color: Colors.primaryColor,
+    fontWeight: "bold",
   },
 });
 
