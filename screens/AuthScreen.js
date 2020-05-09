@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   View,
   Text,
@@ -7,6 +7,8 @@ import {
   TouchableOpacity,
   KeyboardAvoidingView,
   ScrollView,
+  ActivityIndicator,
+  Alert
 } from "react-native";
 import { Container, Content, Form, Input, Item, Button } from "native-base";
 import { useDispatch } from "react-redux";
@@ -16,35 +18,52 @@ import AuthForm from "../components/AuthForm";
 import * as authActions from "../store/actions/auth";
 
 // Need to do error checking on forms. Custom component maybe?
+// have only one form
+// be able to switch back and forth, not just one way 
 
 const AuthScreen = (props) => {
   const [signUpView, setSignUpView] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState()
 
   const changeEmailHandler = (inputText) => {
     setEmail(inputText);
-
   };
 
   const changePasswordHandler = (inputText) => {
     setPassword(inputText);
   };
 
-  const handleLoginSubmit = () => {
-
-    console.log(email, password)
-  }
-
   const dispatch = useDispatch();
 
-  const signUpHandler = () => {
-    dispatch(
-      authActions.signup(
-        email,
-        password
-      )
-    );
+  useEffect(() => {
+    if (error) {
+      Alert.alert('An error occured!', error, [{ text: 'Okay'}]);
+    }
+  }, [error]);
+
+  const authHandler = async () => {
+    let action;
+    if (signUpView) {
+      action = authActions.signup(email, password);
+
+      setSignUpView(false);
+    } else {
+      action = authActions.login(email, password);
+    }
+    setError(null);
+    setIsLoading(true);
+    try {
+      await dispatch(action);
+      props.navigation.navigate('App')
+    } catch (error) {
+      setError(error.message);
+      setIsLoading(false);
+    }
+    
+    
   };
 
   if (!signUpView) {
@@ -60,15 +79,22 @@ const AuthScreen = (props) => {
             changeEmailHandler={changeEmailHandler}
             changePasswordHandler={changePasswordHandler}
           />
+
           <View style={styles.submitButtonContainer}>
-            <Button
-              rounded
-              bordered
-              style={styles.submitButton}
-              onPress={() => {handleLoginSubmit()}}
-            >
-              <Text style={styles.submitButtonText}>Submit</Text>
-            </Button>
+            {isLoading ? (
+              <ActivityIndicator size='small' color={Colors.primaryColor}/>
+            ) : (
+              <Button
+                rounded
+                bordered
+                style={styles.submitButton}
+                onPress={() => {
+                  authHandler();
+                }}
+              >
+                <Text style={styles.submitButtonText}>Login</Text>
+              </Button>
+            )}
           </View>
           <View style={styles.signUp}>
             <Text>Don't have an account?</Text>
@@ -86,20 +112,27 @@ const AuthScreen = (props) => {
         style={styles.screen}
       >
         <Content>
-          <AuthForm 
-          emailValue={email}
-          passwordValue={password}
-          changeEmailHandler={changeEmailHandler}
-          changePasswordHandler={changePasswordHandler}/>
+          <AuthForm
+            emailValue={email}
+            passwordValue={password}
+            changeEmailHandler={changeEmailHandler}
+            changePasswordHandler={changePasswordHandler}
+          />
           <View style={styles.submitButtonContainer}>
-            <Button
-              rounded
-              bordered
-              style={styles.submitButton}
-              onPress={() => {signUpHandler()}}
-            >
-              <Text style={styles.submitButtonText}>Sign up</Text>
-            </Button>
+            {isLoading ? (
+              <ActivityIndicator size='small' color={Colors.primaryColor} />
+            ) : (
+              <Button
+                rounded
+                bordered
+                style={styles.submitButton}
+                onPress={() => {
+                  authHandler();
+                }}
+              >
+                <Text style={styles.submitButtonText}>Sign up</Text>
+              </Button>
+            )}
           </View>
         </Content>
       </KeyboardAvoidingView>
@@ -107,6 +140,7 @@ const AuthScreen = (props) => {
   }
 };
 
+// child component is messing with centering here I think
 const styles = StyleSheet.create({
   screen: {
     flex: 1,

@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   KeyboardAvoidingView,
   ScrollView,
+  
 } from "react-native";
 import { Container, Content, Form, Input, Item, Button } from "native-base";
 
@@ -14,7 +15,7 @@ import Colors from "../constants/Colors";
 
 const AuthForm = (props) => {
 
-    
+ 
  
 
   return (

@@ -15,9 +15,13 @@
 import Company from "../../models/company";
 
 export const fetchSavedCompanies = () => {
-    return async dispatch => {
+    return async (dispatch, getState) => {
+        
+        const token = getState().auth.token;
+        const userId = getState().auth.userId;
+        
 
-        const response = await fetch("https://stocks-react-native.firebaseio.com/companies.json");
+        const response = await fetch(`https://stocks-react-native.firebaseio.com/companies/${userId}.json?auth=${token}`);
 
         const resData = await response.json();
         
@@ -34,9 +38,13 @@ export const fetchSavedCompanies = () => {
 }
 
 export const addNewCompany = (data) => {
-    return async dispatch => {
+    // getState here gives access to all of store.
+    return async (dispatch, getState) => {
+        const token = getState().auth.token;
+        const userId = getState().auth.userId;
+        console.log(userId);
         // any async code you want
-        const response = await fetch("https://stocks-react-native.firebaseio.com/companies.json", {
+        const response = await fetch(`https://stocks-react-native.firebaseio.com/companies/${userId}.json?auth=${token}`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

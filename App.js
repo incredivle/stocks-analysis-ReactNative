@@ -9,11 +9,13 @@ import ReduxThunk from "redux-thunk";
 import MainNavigator from "./navigation/AppNavigator";
 import { newCompanyReducer } from "./store/reducers/companies";
 import { fetchCompaniesReducer } from "./store/reducers/companies";
+import { authReducer } from "./store/reducers/auth";
 import reducers from "./store/reducers/companies";
 
 const rootReducer = combineReducers({
   company: newCompanyReducer,
-  fetchCompanies: fetchCompaniesReducer
+  fetchCompanies: fetchCompaniesReducer,
+  auth: authReducer
 })
 
 
