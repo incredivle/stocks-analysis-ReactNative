@@ -8,7 +8,7 @@ export const signup = (email, password) => {
     return async dispatch => {
         
 
-        const response = await fetch('https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyDlpYF6GzGY-GNWZSMzrvvDd06eLiZEfS8',
+        const response = await fetch(`https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${firebaseApiKey}`,
         
         {
             method: 'POST',
