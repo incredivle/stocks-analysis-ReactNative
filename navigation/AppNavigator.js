@@ -9,6 +9,7 @@ import CompanyDetails from "../screens/CompanyDetailsScreen";
 import AddCompany from "../screens/AddCompanyScreen";
 import About from "../screens/AboutScreen";
 import AuthScreen from "../screens/AuthScreen";
+import StartupScreen from "../screens/StartupScreen";
 import Colors from "../constants/Colors";
 
 const AppNavigator = createStackNavigator({
@@ -53,6 +54,7 @@ const TabNavigator = createBottomTabNavigator({
 });
 
 const MainNavigator = createSwitchNavigator({
+    Startup: StartupScreen,
     Auth: AuthScreen,
     App: TabNavigator
 })

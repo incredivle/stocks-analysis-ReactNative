@@ -6,6 +6,7 @@ import { useSelector, connect, useDispatch } from "react-redux";
 import Colors from "../constants/Colors";
 import CompanyItem from "../components/CompanyItem";
 import { fetchSavedCompanies } from "../store/actions/companies";
+import * as authActions from "../store/actions/auth";
 
 const HomeScreen = (props) => {
   const dispatch = useDispatch();
@@ -63,6 +64,16 @@ const HomeScreen = (props) => {
           )}
           keyExtractor={(item, index) => index.toString()}
         />
+        <Button 
+            rounded
+            bordered
+            style={styles.buttonTwo}
+            onPress={() => {
+              dispatch(authActions.logout());
+              props.navigation.navigate('Auth');
+            }}>
+          <Text style={styles.buttonText}>Logout</Text>
+        </Button>
       </View>
     );
   }
