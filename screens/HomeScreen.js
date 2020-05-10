@@ -33,7 +33,7 @@ const HomeScreen = (props) => {
     
   }, [dispatch, props.savedCompanies]);
 
-  // have another loading indicator until receive data - only show welcome page if empty after that
+
 
   if (isLoading) {
     return <ActivityIndicator style={styles.loading} size="large" color={Colors.primaryColor} />;
@@ -81,7 +81,11 @@ const HomeScreen = (props) => {
     );
   } else {
     return (
-      <View>
+      <Container contentContainerStyle={styles.screen}>
+
+      
+      {/* <Content> */}
+      <View >
         <SwipeListView
           data={props.savedCompanies}
           renderItem={(data, rowMap) => (
@@ -148,6 +152,8 @@ const HomeScreen = (props) => {
           <Text style={styles.buttonText}>Logout</Text>
         </Button>
       </View>
+      {/* </Content> */}
+      </Container>
     );
   }
 };
@@ -161,6 +167,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
+    backgroundColor: 'white'
   },
   buttonOne: {
     backgroundColor: Colors.primaryColor,
@@ -186,6 +193,11 @@ const styles = StyleSheet.create({
   deleteText: {
     color: "white",
   },
+  logoutButton: {
+    
+    justifyContent: 'center'
+  },
+  
 });
 
 // This function allows the returned state to be under props in the HomeScreen component, ie. props.company

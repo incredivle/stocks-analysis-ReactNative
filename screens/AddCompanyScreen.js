@@ -5,6 +5,7 @@ import {
   StyleSheet,
   TouchableOpacity,
   ActivityIndicator,
+  KeyboardAvoidingView,
 } from "react-native";
 import {
   Container,
@@ -44,7 +45,7 @@ const AddCompanyScreen = (props) => {
       .then((response) => {
         setCompanyData(response.data);
         setDisplayData(true);
-        setIsLoading(false)
+        setIsLoading(false);
       });
   };
 
@@ -67,11 +68,22 @@ const AddCompanyScreen = (props) => {
   };
 
   if (isLoading) {
-    return <ActivityIndicator style={styles.loading} size="large" color={Colors.primaryColor} />;
+    return (
+      <ActivityIndicator
+        style={styles.loading}
+        size="large"
+        color={Colors.primaryColor}
+      />
+    );
   } else if (!displayData) {
     return (
-      <Container>
-        <Content contentContainerStyle={styles.screen}>
+      <KeyboardAvoidingView
+        behavior={Platform.OS == "ios" ? "padding" : "height"}
+        style={styles.screen}
+      >
+        <View>
+          {/* <Container>
+        <Content > */}
           <Form>
             <Item>
               <Input
@@ -85,16 +97,20 @@ const AddCompanyScreen = (props) => {
               />
             </Item>
           </Form>
-          <Button
-            rounded
-            bordered
-            style={styles.submitButton}
-            onPress={submitHandler}
-          >
-            <Text style={styles.submitButtonText}>Submit</Text>
-          </Button>
-        </Content>
-      </Container>
+          <View style={styles.submitButtonContainer}>
+            <Button
+              rounded
+              bordered
+              style={styles.submitButton}
+              onPress={submitHandler}
+            >
+              <Text style={styles.submitButtonText}>Submit</Text>
+            </Button>
+          </View>
+          {/* </Content>
+      </Container> */}
+        </View>
+      </KeyboardAvoidingView>
     );
   } else {
     // make this card into a component - keep buttons in this one
@@ -166,6 +182,10 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     // alignItems: "center",
+    backgroundColor: "white",
+  },
+  submitButtonContainer: {
+    alignItems: 'center',
   },
   submitButton: {
     backgroundColor: Colors.primaryColor,
@@ -173,7 +193,7 @@ const styles = StyleSheet.create({
     margin: 10,
     width: "50%",
     justifyContent: "center",
-    // alignItems: 'center'
+    alignItems: "center",
   },
   submitButtonText: {
     color: "white",
