@@ -7,6 +7,7 @@ import { SwipeListView } from "react-native-swipe-list-view";
 import Colors from "../constants/Colors";
 import CompanyItem from "../components/CompanyItem";
 import { fetchSavedCompanies } from "../store/actions/companies";
+import { deleteCompany } from "../store/actions/companies";
 import * as authActions from "../store/actions/auth";
 
 const HomeScreen = (props) => {
@@ -78,13 +79,14 @@ const HomeScreen = (props) => {
           )}
           renderHiddenItem={(data, rowMap) => (
             <View>
-              <Button style={styles.deleteButton} danger onPress={() => {}}>
+              <Button style={styles.deleteButton} danger onPress={() => {dispatch(deleteCompany(data.item.id))}}>
+                {/* // CHANGE TEXT TO BE RIGHT ALIGNED */}
                 <Text style={styles.deleteText}>Delete</Text>
               </Button>
             </View>
           )}
-          leftOpenValue={85}
-          // rightOpenValue={-75}
+          // leftOpenValue={85}
+          rightOpenValue={-85}
 
           keyExtractor={(item, index) => index.toString()}
         />

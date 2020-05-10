@@ -19,6 +19,13 @@ export const fetchCompaniesReducer = ( companies=null, action) => {
     return companies
 }
 
+export const deleteCompanyReducer = (companyId=null, action) => {
+    if (action.type === "DELETE_COMPANY"){
+        return action.companyId
+    }
+    return companyId
+}
+
 const reducers = combineReducers({
     newCompany: newCompanyReducer,
     fetchCompanies: fetchCompaniesReducer,

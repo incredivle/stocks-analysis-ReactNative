@@ -11,11 +11,13 @@ import NavigationContainer from "./navigation/NavigationContainer";
 import { newCompanyReducer } from "./store/reducers/companies";
 import { fetchCompaniesReducer } from "./store/reducers/companies";
 import { authReducer } from "./store/reducers/auth";
+import { deleteCompanyReducer } from "./store/reducers/companies";
 import reducers from "./store/reducers/companies";
 
 const rootReducer = combineReducers({
   company: newCompanyReducer,
   fetchCompanies: fetchCompaniesReducer,
+  deleteCompany: deleteCompanyReducer,
   auth: authReducer
 })
 

@@ -68,4 +68,17 @@ export const addNewCompany = (data) => {
     
 };
 
+export const deleteCompany = companyId => {
+    return async (dispatch, getState) => {
+        const token = getState().auth.token;
+        const userId = getState().auth.userId;
+        await fetch(`https://real-stocks-analysis.firebaseio.com/companies/${userId}/${companyId}.json?auth=${token}`, {
+            method: 'DELETE'
+            
+        });
+
+        dispatch({ type: 'DELETE_COMPANY', companyId: companyId});
+    }
+}
+
 
