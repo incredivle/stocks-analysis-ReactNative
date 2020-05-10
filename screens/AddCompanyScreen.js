@@ -93,6 +93,7 @@ const AddCompanyScreen = (props) => {
       </Container>
     );
   } else {
+    // make this card into a component - keep buttons in this one
     return (
       <Container>
         <Content>
@@ -179,7 +180,7 @@ const styles = StyleSheet.create({
 });
 
 const mapStateToProps = state => {
-  // console.log(state.company);
+  
   return {company: state.company}
 }
 

@@ -14,6 +14,8 @@ const HomeScreen = (props) => {
     dispatch(fetchSavedCompanies());
   }, [dispatch, props.savedCompanies]);
 
+  // have another loading indicator until receive data - only show welcome page if empty after that
+
   if (props.savedCompanies === null || props.savedCompanies.length === 0) {
     return (
       <Container>
@@ -48,8 +50,16 @@ const HomeScreen = (props) => {
         <FlatList
           data={props.savedCompanies}
           renderItem={({ item }) => (
+            <TouchableOpacity onPress={() => {
+              props.navigation.navigate({routeName: 'CompanyDetailsScreen', params: {
+                company: item.data
+              }})
+            }}>
+
+            
             <CompanyItem name={item.data.stockName} />
-            // <Text>{item.name}</Text>
+            
+            </TouchableOpacity>
           )}
           keyExtractor={(item, index) => index.toString()}
         />

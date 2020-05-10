@@ -24,7 +24,9 @@ const CompanyItem = (props) => {
 
 
     
-    <TouchableOpacity>
+    <View>
+
+   
       
           <Card>
             <CardItem header bordered>
@@ -34,7 +36,7 @@ const CompanyItem = (props) => {
             </CardItem>
           </Card>
         
-    </TouchableOpacity>
+          </View>
 
   );
 };

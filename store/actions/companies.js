@@ -42,7 +42,7 @@ export const addNewCompany = (data) => {
     return async (dispatch, getState) => {
         const token = getState().auth.token;
         const userId = getState().auth.userId;
-        console.log(userId);
+        
         // any async code you want
         const response = await fetch(`https://real-stocks-analysis.firebaseio.com/companies/${userId}.json?auth=${token}`, {
             method: 'POST',
@@ -54,7 +54,7 @@ export const addNewCompany = (data) => {
 
         const resData = await response.json();
 
-        console.log(resData);
+        
         dispatch ({
             type: 'NEW_COMPANY',
             // can add in id here from resData.id, make payload into an object containing data and id
