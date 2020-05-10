@@ -7,6 +7,7 @@ import { Provider } from "react-redux";
 import ReduxThunk from "redux-thunk";
 
 import MainNavigator from "./navigation/AppNavigator";
+import NavigationContainer from "./navigation/NavigationContainer";
 import { newCompanyReducer } from "./store/reducers/companies";
 import { fetchCompaniesReducer } from "./store/reducers/companies";
 import { authReducer } from "./store/reducers/auth";
@@ -43,5 +44,5 @@ export default function App() {
     );
   }
 
-  return <Provider store={store}><MainNavigator /></Provider>;
+  return <Provider store={store}><NavigationContainer /></Provider>;
 }

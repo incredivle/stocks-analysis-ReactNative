@@ -8,10 +8,15 @@ const { firebaseApiKey } = getEnvVars();
 export const AUTHENTICATE = 'AUTHENTICATE';
 export const LOGOUT = 'LOGOUT';
 
+let timer;
 
-export const authenticate = (userId, token) => {
-    return { type: AUTHENTICATE, userId: userId, token: token }
-}
+export const authenticate = (userId, token, expiryTime) => {
+    return dispatch => {
+        dispatch(setLogoutTimer(expiryTime));
+        dispatch({ type: AUTHENTICATE, userId: userId, token: token });
+    };
+    
+};
 
 
 
@@ -50,7 +55,7 @@ export const signup = (email, password) => {
 
         const resData = await response.json();
         // dispatch({type: SIGNUP, token: resData.idToken , userId: resData.localId });
-        dispatch(authenticate(resData.localId, resData.idToken));
+        dispatch(authenticate(resData.localId, resData.idToken, parseInt(resData.expiresIn) * 1000));
         const expirationDate = new Date(new Date().getTime() + parseInt(resData.expiresIn) * 1000); // convert seconds to milliseconds
         saveDataToStorage(resData.idToken, resData.localId, expirationDate);
     };
@@ -94,14 +99,33 @@ export const login = (email, password) => {
         const resData = await response.json();
         
         // dispatch({type: LOGIN, token: resData.idToken , userId: resData.localId});
-        dispatch(authenticate(resData.localId, resData.idToken));
+        dispatch(authenticate(resData.localId, resData.idToken, parseInt(resData.expiresIn) * 1000));
         const expirationDate = new Date(new Date().getTime() + parseInt(resData.expiresIn) * 1000); // convert seconds to milliseconds
         saveDataToStorage(resData.idToken, resData.localId, expirationDate);
     };
 }
 
 export const logout = () => {
+    
+    
+    clearLogoutTimer();
+    AsyncStorage.removeItem('userData');
+
     return { type: LOGOUT };
+}
+
+const clearLogoutTimer = () => {
+    if (timer) {
+        clearTimeout(timer) // clearTimeout is a built-in Javascript function. 
+    }
+}
+
+const setLogoutTimer = expirationTime => {
+    return dispatch => {
+        timer = setTimeout(() => {
+            dispatch(logout())
+        }, expirationTime);
+    }   
 }
 
 const saveDataToStorage = (token, userId, expirationDate) => {

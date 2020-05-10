@@ -42,6 +42,16 @@ const HomeScreen = (props) => {
           >
             <Text style={styles.buttonText}>More Info</Text>
           </Button>
+          <Button 
+            rounded
+            bordered
+            style={styles.buttonTwo}
+            onPress={() => {
+              dispatch(authActions.logout());
+              // props.navigation.navigate('Auth'); This is already being done through NavigationContainer
+            }}>
+          <Text style={styles.buttonText}>Logout</Text>
+        </Button>
         </Content>
       </Container>
     );
@@ -70,7 +80,7 @@ const HomeScreen = (props) => {
             style={styles.buttonTwo}
             onPress={() => {
               dispatch(authActions.logout());
-              props.navigation.navigate('Auth');
+              // props.navigation.navigate('Auth'); This is already being done through NavigationContainer
             }}>
           <Text style={styles.buttonText}>Logout</Text>
         </Button>
