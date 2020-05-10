@@ -1,5 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { View, FlatList, StyleSheet, TouchableOpacity } from "react-native";
+import {
+  View,
+  FlatList,
+  StyleSheet,
+  TouchableOpacity,
+  ActivityIndicator,
+} from "react-native";
 import { Container, Text, Content, Button } from "native-base";
 import { useSelector, connect, useDispatch } from "react-redux";
 import { SwipeListView } from "react-native-swipe-list-view";
@@ -9,17 +15,32 @@ import CompanyItem from "../components/CompanyItem";
 import { fetchSavedCompanies } from "../store/actions/companies";
 import { deleteCompany } from "../store/actions/companies";
 import * as authActions from "../store/actions/auth";
+import { set } from "react-native-reanimated";
 
 const HomeScreen = (props) => {
   const dispatch = useDispatch();
 
+  const [isLoading, setIsLoading] = useState(true);
+
   useEffect(() => {
-    dispatch(fetchSavedCompanies());
+    
+    async function getCompanies(){
+      await dispatch(fetchSavedCompanies());
+      setIsLoading(false);
+    }
+
+    getCompanies();
+    
   }, [dispatch, props.savedCompanies]);
 
   // have another loading indicator until receive data - only show welcome page if empty after that
 
-  if (props.savedCompanies === null || props.savedCompanies.length === 0) {
+  if (isLoading) {
+    return <ActivityIndicator style={styles.loading} size="large" color={Colors.primaryColor} />;
+  } else if (
+    props.savedCompanies === null ||
+    props.savedCompanies.length === 0
+  ) {
     return (
       <Container>
         <Content contentContainerStyle={styles.screen}>
@@ -65,6 +86,7 @@ const HomeScreen = (props) => {
           data={props.savedCompanies}
           renderItem={(data, rowMap) => (
             <TouchableOpacity
+              activeOpacity={0.7}
               onPress={() => {
                 props.navigation.navigate({
                   routeName: "CompanyDetailsScreen",
@@ -79,14 +101,19 @@ const HomeScreen = (props) => {
           )}
           renderHiddenItem={(data, rowMap) => (
             <View>
-              <Button style={styles.deleteButton} danger onPress={() => {dispatch(deleteCompany(data.item.id))}}>
-                {/* // CHANGE TEXT TO BE RIGHT ALIGNED */}
+              <Button
+                style={styles.deleteButton}
+                danger
+                onPress={() => {
+                  dispatch(deleteCompany(data.item.id));
+                }}
+              >
                 <Text style={styles.deleteText}>Delete</Text>
               </Button>
             </View>
           )}
-          // leftOpenValue={85}
-          rightOpenValue={-85}
+          leftOpenValue={85}
+          // rightOpenValue={-85}
 
           keyExtractor={(item, index) => index.toString()}
         />
@@ -126,6 +153,10 @@ const HomeScreen = (props) => {
 };
 
 const styles = StyleSheet.create({
+  loading: {
+    flex: 1,
+    justifyContent: "center",
+  },
   screen: {
     flex: 1,
     justifyContent: "center",
@@ -149,11 +180,12 @@ const styles = StyleSheet.create({
   deleteButton: {
     marginTop: 10,
     marginLeft: 10,
-    marginRight: 10
+    marginRight: 10,
+    marginBottom: 10,
   },
   deleteText: {
-    color: 'white'
-  }
+    color: "white",
+  },
 });
 
 // This function allows the returned state to be under props in the HomeScreen component, ie. props.company

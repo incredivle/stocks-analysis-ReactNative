@@ -1,5 +1,11 @@
 import React, { useState, useCallback } from "react";
-import { View, FlatList, StyleSheet, TouchableOpacity } from "react-native";
+import {
+  View,
+  FlatList,
+  StyleSheet,
+  TouchableOpacity,
+  ActivityIndicator,
+} from "react-native";
 import {
   Container,
   Text,
@@ -20,51 +26,49 @@ import { StackRouter } from "react-navigation";
 import Colors from "../constants/Colors";
 import { addNewCompany } from "../store/actions/companies";
 
-
-
 const AddCompanyScreen = (props) => {
-
-
   const [newCompany, setNewCompany] = useState("");
   const [companyData, setCompanyData] = useState({});
   const [displayData, setDisplayData] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const changeTextHandler = (inputText) => {
     setNewCompany(inputText);
   };
 
   const submitHandler = () => {
+    setIsLoading(true);
     // API Call
     axios
       .get(`https://stockanalysisapi.herokuapp.com/${newCompany}/10`)
       .then((response) => {
         setCompanyData(response.data);
         setDisplayData(true);
+        setIsLoading(false)
       });
   };
-
 
   const saveHandler = () => {
     props.addNewCompany(companyData);
     setDisplayData(false);
     setNewCompany("");
-    props.navigation.navigate({routeName: "Home"});
+    props.navigation.navigate({ routeName: "Home" });
 
     //save to database
 
     //navigate back to home page
-  }
+  };
 
   const discardHandler = () => {
-      // Set state to be an empty object
-      setCompanyData({});
-      setDisplayData(false);
-      setNewCompany("");
-  }
+    // Set state to be an empty object
+    setCompanyData({});
+    setDisplayData(false);
+    setNewCompany("");
+  };
 
-  
-
-  if (!displayData) {
+  if (isLoading) {
+    return <ActivityIndicator style={styles.loading} size="large" color={Colors.primaryColor} />;
+  } else if (!displayData) {
     return (
       <Container>
         <Content contentContainerStyle={styles.screen}>
@@ -123,7 +127,9 @@ const AddCompanyScreen = (props) => {
                 style={styles.optionsButton}
                 onPress={submitHandler}
               >
-                <Text style={styles.submitButtonText} onPress={saveHandler}>Save</Text>
+                <Text style={styles.submitButtonText} onPress={saveHandler}>
+                  Save
+                </Text>
               </Button>
               <Button
                 rounded
@@ -131,7 +137,9 @@ const AddCompanyScreen = (props) => {
                 style={styles.optionsButton}
                 onPress={submitHandler}
               >
-                <Text style={styles.submitButtonText} onPress={discardHandler}>Discard</Text>
+                <Text style={styles.submitButtonText} onPress={discardHandler}>
+                  Discard
+                </Text>
               </Button>
             </View>
           </Card>
@@ -150,6 +158,10 @@ AddCompanyScreen.navigationOptions = {
 };
 
 const styles = StyleSheet.create({
+  loading: {
+    flex: 1,
+    justifyContent: "center",
+  },
   screen: {
     flex: 1,
     justifyContent: "center",
@@ -167,8 +179,8 @@ const styles = StyleSheet.create({
     color: "white",
   },
   options: {
-      flexDirection: "row",
-      justifyContent: "center"
+    flexDirection: "row",
+    justifyContent: "center",
   },
   optionsButton: {
     backgroundColor: Colors.primaryColor,
@@ -179,11 +191,10 @@ const styles = StyleSheet.create({
   },
 });
 
-const mapStateToProps = state => {
-  
-  return {company: state.company}
-}
+const mapStateToProps = (state) => {
+  return { company: state.company };
+};
 
 export default connect(mapStateToProps, {
-  addNewCompany: addNewCompany
+  addNewCompany: addNewCompany,
 })(AddCompanyScreen);
