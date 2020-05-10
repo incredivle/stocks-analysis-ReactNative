@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { View, FlatList, StyleSheet, TouchableOpacity } from "react-native";
 import { Container, Text, Content, Button } from "native-base";
 import { useSelector, connect, useDispatch } from "react-redux";
+import { SwipeListView } from "react-native-swipe-list-view";
 
 import Colors from "../constants/Colors";
 import CompanyItem from "../components/CompanyItem";
@@ -42,46 +43,79 @@ const HomeScreen = (props) => {
           >
             <Text style={styles.buttonText}>More Info</Text>
           </Button>
-          <Button 
+          <Button
             rounded
             bordered
             style={styles.buttonTwo}
             onPress={() => {
               dispatch(authActions.logout());
               // props.navigation.navigate('Auth'); This is already being done through NavigationContainer
-            }}>
-          <Text style={styles.buttonText}>Logout</Text>
-        </Button>
+            }}
+          >
+            <Text style={styles.buttonText}>Logout</Text>
+          </Button>
         </Content>
       </Container>
     );
   } else {
     return (
       <View>
-        <FlatList
+        <SwipeListView
+          data={props.savedCompanies}
+          renderItem={(data, rowMap) => (
+            <TouchableOpacity
+              onPress={() => {
+                props.navigation.navigate({
+                  routeName: "CompanyDetailsScreen",
+                  params: {
+                    company: data.item.data,
+                  },
+                });
+              }}
+            >
+              <CompanyItem name={data.item.data.stockName} />
+            </TouchableOpacity>
+          )}
+          renderHiddenItem={(data, rowMap) => (
+            <View>
+              <Button style={styles.deleteButton} danger onPress={() => {}}>
+                <Text style={styles.deleteText}>Delete</Text>
+              </Button>
+            </View>
+          )}
+          leftOpenValue={85}
+          // rightOpenValue={-75}
+
+          keyExtractor={(item, index) => index.toString()}
+        />
+
+        {/* <FlatList
           data={props.savedCompanies}
           renderItem={({ item }) => (
-            <TouchableOpacity onPress={() => {
-              props.navigation.navigate({routeName: 'CompanyDetailsScreen', params: {
-                company: item.data
-              }})
-            }}>
-
-            
-            <CompanyItem name={item.data.stockName} />
-            
+            <TouchableOpacity
+              onPress={() => {
+                props.navigation.navigate({
+                  routeName: "CompanyDetailsScreen",
+                  params: {
+                    company: item.data,
+                  },
+                });
+              }}
+            >
+              <CompanyItem name={item.data.stockName} />
             </TouchableOpacity>
           )}
           keyExtractor={(item, index) => index.toString()}
-        />
-        <Button 
-            rounded
-            bordered
-            style={styles.buttonTwo}
-            onPress={() => {
-              dispatch(authActions.logout());
-              // props.navigation.navigate('Auth'); This is already being done through NavigationContainer
-            }}>
+        /> */}
+        <Button
+          rounded
+          bordered
+          style={styles.buttonTwo}
+          onPress={() => {
+            dispatch(authActions.logout());
+            // props.navigation.navigate('Auth'); This is already being done through NavigationContainer
+          }}
+        >
           <Text style={styles.buttonText}>Logout</Text>
         </Button>
       </View>
@@ -110,6 +144,14 @@ const styles = StyleSheet.create({
   buttonText: {
     color: Colors.primaryColor,
   },
+  deleteButton: {
+    marginTop: 10,
+    marginLeft: 10,
+    marginRight: 10
+  },
+  deleteText: {
+    color: 'white'
+  }
 });
 
 // This function allows the returned state to be under props in the HomeScreen component, ie. props.company
