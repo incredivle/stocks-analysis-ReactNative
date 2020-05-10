@@ -109,7 +109,7 @@ const AuthScreen = (props) => {
         behavior={Platform.OS == "ios" ? "padding" : "height"}
         style={styles.screen}
       >
-        <Content >
+        {/* <Content > */}
           <AuthForm
             emailValue={email}
             passwordValue={password}
@@ -132,7 +132,7 @@ const AuthScreen = (props) => {
               </Button>
             )}
           </View>
-        </Content>
+        {/* </Content> */}
       </KeyboardAvoidingView>
     );
   }
