@@ -47,14 +47,26 @@ const AddCompanyScreen = (props) => {
     // API Call
 
     // Combine two api calls here using the method in the API. Save both to setCompanyData?
+
+
+
+    // async/await with axios: https://medium.com/better-programming/how-to-use-async-await-with-axios-in-react-e07daac2905f
     axios
       .get(`https://stockanalysisapi.herokuapp.com/${newCompany}/10`)
       .then((response) => {
         setCompanyData(response.data);
         // setDisplayData(true);
         // setIsLoading(false);
+
+
+        // Need to catch errors
+      //   .catch(err => {
+      //     console.log(err);
+      //     return null;
+      // });
         console.log(
           response.data.stockName.slice(0, response.data.stockName.length - 5)
+
         );
         axios
           // .get(
@@ -62,6 +74,8 @@ const AddCompanyScreen = (props) => {
           //     0,
           //     response.data.stockName.length - 5
           //   )}`,
+
+          // The param needs to be sliced because these companies have Inc. at the end. 
             .get(
               `https://company.clearbit.com/v1/domains/find?name=${response.data.stockName.slice(
                     0,
@@ -79,11 +93,18 @@ const AddCompanyScreen = (props) => {
             setIsLoading(false);
             
           });
+
+              // Need to catch errors
+      //   .catch(err => {
+      //     console.log(err);
+      //     return null;
+      // });
       });
 
-    // Get logo
-    // Need to slice string to remove last four characters to get rid of Inc
-    // Add in logos from Clearbit api if using it.
+      // A useEffect hook for the logo and domain? 
+
+   
+    // Add in urls from Clearbit api if using it.
   };
 
   const saveHandler = () => {
