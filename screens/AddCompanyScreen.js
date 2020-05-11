@@ -35,6 +35,8 @@ const AddCompanyScreen = (props) => {
   const [companyData, setCompanyData] = useState({});
   const [displayData, setDisplayData] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [domain, setDomain] = useState('');
+  const [logo, setLogo] = useState('');
 
   const changeTextHandler = (inputText) => {
     setNewCompany(inputText);
@@ -49,20 +51,39 @@ const AddCompanyScreen = (props) => {
       .get(`https://stockanalysisapi.herokuapp.com/${newCompany}/10`)
       .then((response) => {
         setCompanyData(response.data);
-        setDisplayData(true);
-        setIsLoading(false);
+        // setDisplayData(true);
+        // setIsLoading(false);
+        console.log(
+          response.data.stockName.slice(0, response.data.stockName.length - 5)
+        );
+        axios
+          // .get(
+          //   `https://company.clearbit.com/v1/domains/find?name=${response.data.stockName.slice(
+          //     0,
+          //     response.data.stockName.length - 5
+          //   )}`,
+            .get(
+              `https://company.clearbit.com/v1/domains/find?name=${response.data.stockName.slice(
+                    0,
+                    response.data.stockName.length - 5
+                  )}`,
+            { headers: { 'Authorization': `Bearer ${clearbitApiKey}` } }
+          )
+          .then((response) => {
+            console.log(response.data);
+            setDomain(response.data.domain);
+            setLogo(response.data.logo);
+            console.log(response.data.logo)
+            
+            setDisplayData(true);
+            setIsLoading(false);
+            
+          });
       });
 
     // Get logo
     // Need to slice string to remove last four characters to get rid of Inc
-    axios
-      .get(
-        `https://company.clearbit.com/v1/domains/find?name=${companyData.stockName}`,
-        { headers: { Authorization: clearbitApiKey } }
-      )
-      .then((response) => {
-        console.log(response);
-      });
+    // Add in logos from Clearbit api if using it.
   };
 
   const saveHandler = () => {
@@ -134,12 +155,14 @@ const AddCompanyScreen = (props) => {
     return (
       <Container>
         <Content>
+          
+        
           <Card>
             <CardItem header>
               <Text>
                 {companyData.stockName} ({companyData.stockSymbol})
               </Text>
-              {/* <Image source={}/> */}
+              
             </CardItem>
             <CardItem>
               <Body>
@@ -159,9 +182,9 @@ const AddCompanyScreen = (props) => {
                 rounded
                 bordered
                 style={styles.optionsButton}
-                onPress={submitHandler}
+                onPress={saveHandler}
               >
-                <Text style={styles.submitButtonText} onPress={saveHandler}>
+                <Text style={styles.submitButtonText} >
                   Save
                 </Text>
               </Button>
@@ -169,14 +192,18 @@ const AddCompanyScreen = (props) => {
                 rounded
                 bordered
                 style={styles.optionsButton}
-                onPress={submitHandler}
+                onPress={discardHandler}
               >
-                <Text style={styles.submitButtonText} onPress={discardHandler}>
+                <Text style={styles.submitButtonText} >
                   Discard
                 </Text>
               </Button>
             </View>
           </Card>
+          <View style={styles.imageContainer}>
+            <Text>Image Container</Text>
+          <Image source={{uri: logo}}/>
+          </View>
         </Content>
       </Container>
     );
@@ -195,6 +222,9 @@ const styles = StyleSheet.create({
   loading: {
     flex: 1,
     justifyContent: "center",
+  },
+  imageContainer: {
+    backgroundColor: 'red'
   },
   screen: {
     flex: 1,
