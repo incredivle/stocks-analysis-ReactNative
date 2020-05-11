@@ -85,7 +85,7 @@ const AddCompanyScreen = (props) => {
           {/* <Container>
         <Content > */}
           <Form>
-            <Item>
+            <Item >
               <Input
                 blurOnSubmit
                 autoCapitalize="characters"
@@ -94,6 +94,7 @@ const AddCompanyScreen = (props) => {
                 placeholder="Company Symbol"
                 onChangeText={changeTextHandler}
                 value={newCompany}
+                style={styles.input}
               />
             </Item>
           </Form>
@@ -183,6 +184,12 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     // alignItems: "center",
     backgroundColor: "white",
+  },
+  input: {
+    flex: 1,
+    // justifyContent: 'center',
+    alignItems: 'center',
+    alignContent: 'center'
   },
   submitButtonContainer: {
     alignItems: 'center',
