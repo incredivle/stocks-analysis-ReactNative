@@ -143,13 +143,13 @@ const HomeScreen = (props) => {
         <Button
           rounded
           bordered
-          style={styles.buttonTwo}
+          style={styles.logoutButton}
           onPress={() => {
             dispatch(authActions.logout());
             // props.navigation.navigate('Auth'); This is already being done through NavigationContainer
           }}
         >
-          <Text style={styles.buttonText}>Logout</Text>
+          <Text style={styles.logoutButtonText}>Logout</Text>
         </Button>
       </View>
       {/* </Content> */}
@@ -194,8 +194,15 @@ const styles = StyleSheet.create({
     color: "white",
   },
   logoutButton: {
-    
+    borderColor: Colors.primaryColor,
+    backgroundColor: Colors.primaryColor,
+    margin: 10,
+    width: "50%",
+    alignSelf: 'center',
     justifyContent: 'center'
+  },
+  logoutButtonText: {
+    color: 'white',
   },
   
 });

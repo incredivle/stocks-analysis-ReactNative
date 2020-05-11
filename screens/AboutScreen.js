@@ -6,13 +6,28 @@ import {
   StyleSheet,
   TouchableOpacity
 } from 'react-native';
+import { Container, Header, Content, Accordion } from "native-base";
+
 import Colors from '../constants/Colors';
+
+const dataArray = [
+    { title: "First Element", content: "Lorem ipsum dolor sit amet" },
+    { title: "Second Element", content: "Lorem ipsum dolor sit amet" },
+    { title: "Third Element", content: "Lorem ipsum dolor sit amet" }
+  ];
 
 const AboutScreen = props => {
 return (
-    <View style={styles.screen}>
-        <Text>AboutScreen</Text>
-    </View>
+    
+        <View style={styles.screen}>
+
+        
+          <Accordion
+            dataArray={dataArray}
+            headerStyle={{  color: 'white' }}
+            contentStyle={{ backgroundColor: 'white' }}
+          />
+      </View>
 )
 }
 
@@ -28,7 +43,8 @@ const styles = StyleSheet.create({
     screen: {
         flex: 1,
         justifyContent: 'center',
-        alignItems: 'center'
+        // alignItems: 'center',
+        backgroundColor: 'white',
     }
 });
 

@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   ActivityIndicator,
   KeyboardAvoidingView,
+  Image,
 } from "react-native";
 import {
   Container,
@@ -26,6 +27,8 @@ import { StackRouter } from "react-navigation";
 
 import Colors from "../constants/Colors";
 import { addNewCompany } from "../store/actions/companies";
+import getEnvVars from "../environment";
+const { clearbitApiKey } = getEnvVars();
 
 const AddCompanyScreen = (props) => {
   const [newCompany, setNewCompany] = useState("");
@@ -40,12 +43,25 @@ const AddCompanyScreen = (props) => {
   const submitHandler = () => {
     setIsLoading(true);
     // API Call
+
+    // Combine two api calls here using the method in the API. Save both to setCompanyData?
     axios
       .get(`https://stockanalysisapi.herokuapp.com/${newCompany}/10`)
       .then((response) => {
         setCompanyData(response.data);
         setDisplayData(true);
         setIsLoading(false);
+      });
+
+    // Get logo
+    // Need to slice string to remove last four characters to get rid of Inc
+    axios
+      .get(
+        `https://company.clearbit.com/v1/domains/find?name=${companyData.stockName}`,
+        { headers: { Authorization: clearbitApiKey } }
+      )
+      .then((response) => {
+        console.log(response);
       });
   };
 
@@ -85,7 +101,7 @@ const AddCompanyScreen = (props) => {
           {/* <Container>
         <Content > */}
           <Form>
-            <Item >
+            <Item>
               <Input
                 blurOnSubmit
                 autoCapitalize="characters"
@@ -123,6 +139,7 @@ const AddCompanyScreen = (props) => {
               <Text>
                 {companyData.stockName} ({companyData.stockSymbol})
               </Text>
+              {/* <Image source={}/> */}
             </CardItem>
             <CardItem>
               <Body>
@@ -188,11 +205,11 @@ const styles = StyleSheet.create({
   input: {
     flex: 1,
     // justifyContent: 'center',
-    alignItems: 'center',
-    alignContent: 'center'
+    alignItems: "center",
+    alignContent: "center",
   },
   submitButtonContainer: {
-    alignItems: 'center',
+    alignItems: "center",
   },
   submitButton: {
     backgroundColor: Colors.primaryColor,

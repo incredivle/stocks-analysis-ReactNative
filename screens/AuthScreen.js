@@ -132,6 +132,12 @@ const AuthScreen = (props) => {
               </Button>
             )}
           </View>
+          <View style={styles.signUp}>
+            <Text>Already have an account?</Text>
+            <TouchableOpacity onPress={() => setSignUpView(false)}>
+              <Text style={styles.signUpButton}>Login.</Text>
+            </TouchableOpacity>
+          </View>
         {/* </Content> */}
       </KeyboardAvoidingView>
     );
