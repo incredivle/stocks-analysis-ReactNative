@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useEffect } from "react";
 import {
   View,
   FlatList,
@@ -35,8 +35,9 @@ const AddCompanyScreen = (props) => {
   const [companyData, setCompanyData] = useState({});
   const [displayData, setDisplayData] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [domain, setDomain] = useState('');
-  const [logo, setLogo] = useState('');
+  const [domain, setDomain] = useState("");
+  const [logo, setLogo] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
 
   const changeTextHandler = (inputText) => {
     setNewCompany(inputText);
@@ -44,78 +45,69 @@ const AddCompanyScreen = (props) => {
 
   const submitHandler = () => {
     setIsLoading(true);
+
     // API Call
-
-    // Combine two api calls here using the method in the API. Save both to setCompanyData?
-
-
-
-    // async/await with axios: https://medium.com/better-programming/how-to-use-async-await-with-axios-in-react-e07daac2905f
     axios
       .get(`https://stockanalysisapi.herokuapp.com/${newCompany}/10`)
       .then((response) => {
-        setCompanyData(response.data);
-        // setDisplayData(true);
-        // setIsLoading(false);
+        if (response.data === null) {
+          setErrorMessage("Could not find company");
+        } else {
+          setCompanyData(response.data);
 
+          axios
 
-        // Need to catch errors
-      //   .catch(err => {
-      //     console.log(err);
-      //     return null;
-      // });
-        console.log(
-          response.data.stockName.slice(0, response.data.stockName.length - 5)
-
-        );
-        axios
-          // .get(
-          //   `https://company.clearbit.com/v1/domains/find?name=${response.data.stockName.slice(
-          //     0,
-          //     response.data.stockName.length - 5
-          //   )}`,
-
-          // The param needs to be sliced because these companies have Inc. at the end. 
+            // The param needs to be sliced because these companies have Inc. at the end.
             .get(
               `https://company.clearbit.com/v1/domains/find?name=${response.data.stockName.slice(
-                    0,
-                    response.data.stockName.length - 5
-                  )}`,
-            { headers: { 'Authorization': `Bearer ${clearbitApiKey}` } }
-          )
-          .then((response) => {
-            console.log(response.data);
-            setDomain(response.data.domain);
-            setLogo(response.data.logo);
-            console.log(response.data.logo)
-            
-            setDisplayData(true);
-            setIsLoading(false);
-            
-          });
+                0,
+                response.data.stockName.length - 5
+              )}`,
+              { headers: { Authorization: `Bearer ${clearbitApiKey}` } }
+            )
+            .then((response) => {
+              setDomain(response.data.domain);
+              setLogo(response.data.logo);
+            })
 
-              // Need to catch errors
-      //   .catch(err => {
-      //     console.log(err);
-      //     return null;
-      // });
+            // Need to catch errors
+            .catch((err) => {
+              console.log(err);
+              setDisplayData(true);
+              
+
+              return null;
+            });
+        }
+      })
+
+      // Need to catch errors
+      .catch((err) => {
+        console.log(err);
+        setErrorMessage("Could not find company");
+        setIsLoading(false);
+        return null;
       });
 
-      // A useEffect hook for the logo and domain? 
-
    
+
     // Add in urls from Clearbit api if using it.
   };
+
+  useEffect(() => {
+    if (logo != "" && domain != "") {
+      console.log(logo);
+      console.log(domain);
+      setDisplayData(true);
+      setIsLoading(false);
+    }
+  }, [logo]);
 
   const saveHandler = () => {
     props.addNewCompany(companyData);
     setDisplayData(false);
     setNewCompany("");
     props.navigation.navigate({ routeName: "Home" });
-
-    //save to database
-
-    //navigate back to home page
   };
 
   const discardHandler = () => {
@@ -125,6 +117,13 @@ const AddCompanyScreen = (props) => {
     setNewCompany("");
   };
 
+  const refreshHandler = () => {
+    setCompanyData({});
+    setDisplayData(false);
+    setNewCompany("");
+    setErrorMessage("");
+  };
+
   if (isLoading) {
     return (
       <ActivityIndicator
@@ -132,6 +131,20 @@ const AddCompanyScreen = (props) => {
         size="large"
         color={Colors.primaryColor}
       />
+    );
+  } else if (errorMessage != "") {
+    return (
+      <View style={styles.screen}>
+        <Text>{errorMessage}</Text>
+        <Button
+          rounded
+          bordered
+          onPress={refreshHandler}
+          style={styles.submitButton}
+        >
+          <Text style={styles.submitButtonText}>New Company</Text>
+        </Button>
+      </View>
     );
   } else if (!displayData) {
     return (
@@ -176,14 +189,16 @@ const AddCompanyScreen = (props) => {
     return (
       <Container>
         <Content>
-          
-        
           <Card>
             <CardItem header>
               <Text>
                 {companyData.stockName} ({companyData.stockSymbol})
               </Text>
-              
+              <View>
+                {logo != "" && (
+                  <Image style={styles.image} source={{ uri: logo }} />
+                )}
+              </View>
             </CardItem>
             <CardItem>
               <Body>
@@ -205,9 +220,7 @@ const AddCompanyScreen = (props) => {
                 style={styles.optionsButton}
                 onPress={saveHandler}
               >
-                <Text style={styles.submitButtonText} >
-                  Save
-                </Text>
+                <Text style={styles.submitButtonText}>Save</Text>
               </Button>
               <Button
                 rounded
@@ -215,16 +228,10 @@ const AddCompanyScreen = (props) => {
                 style={styles.optionsButton}
                 onPress={discardHandler}
               >
-                <Text style={styles.submitButtonText} >
-                  Discard
-                </Text>
+                <Text style={styles.submitButtonText}>Discard</Text>
               </Button>
             </View>
           </Card>
-          <View style={styles.imageContainer}>
-            <Text>Image Container</Text>
-          <Image source={{uri: logo}}/>
-          </View>
         </Content>
       </Container>
     );
@@ -244,8 +251,9 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
   },
-  imageContainer: {
-    backgroundColor: 'red'
+  image: {
+    width: 66,
+    height: 58,
   },
   screen: {
     flex: 1,
