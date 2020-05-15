@@ -41,6 +41,7 @@ const HomeScreen = (props) => {
     props.savedCompanies === null ||
     props.savedCompanies.length === 0
   ) {
+    ///////////// Error checking if there is no logo/domain ////////////
     return (
       <Container>
         <Content contentContainerStyle={styles.introScreen}>

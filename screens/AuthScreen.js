@@ -129,6 +129,8 @@ const AuthScreen = (props) => {
             {isLoading ? (
               <ActivityIndicator size="small" color={Colors.primaryColor} />
             ) : (
+
+              ////// DISABLE LOGIN/SIGNUP BUTTON UNTIL INPUTTED TEXT/VALID EMAIL/LONG ENOUGH PASSWORD //////
               <Button
                 rounded
                 bordered

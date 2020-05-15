@@ -1,90 +1,100 @@
-import React from 'react';
+import React from "react";
 import {
   View,
   FlatList,
   StyleSheet,
-  TouchableOpacity
-} from 'react-native';
+  TouchableOpacity,
+  Image,
+} from "react-native";
 import {
-    Container,
-    Text,
-    Content,
-    Button,
-    Form,
-    Item,
-    Input,
-    Header,
-    Card,
-    CardItem,
-    Body,
-  } from "native-base";
-import * as Svg from 'react-native-svg';
-import { LineChart, Grid, XAxis, YAxis } from 'react-native-svg-charts'
+  Container,
+  Text,
+  Content,
+  Button,
+  Form,
+  Item,
+  Input,
+  Header,
+  Card,
+  CardItem,
+  Body,
+} from "native-base";
+import * as Svg from "react-native-svg";
+import { LineChart, Grid, XAxis, YAxis } from "react-native-svg-charts";
 
-import Colors from '../constants/Colors';
+import Colors from "../constants/Colors";
 
+const CompanyDetailsScreen = (props) => {
+  const company = props.navigation.getParam("company");
 
-const CompanyDetailsScreen = props => {
-    const company = props.navigation.getParam('company');
-    
+  const data = [50, 10, 40, 95, -4, -24, 85, 91, 35, 53, -53, 24, 50, -20, -80];
+  const axesSvg = { fontSize: 10, fill: "grey" };
+  const verticalContentInset = { top: 10, bottom: 10 }; // set this dynamically: a bit below min of array and bit above max of array
+  const xAxisHeight = 30; // set as 10 for 10 years
+  // Labelled axis?
 
-    const data = [50, 10, 40, 95, -4, -24, 85, 91, 35, 53, -53, 24, 50, -20, -80]
-    const axesSvg = { fontSize: 10, fill: 'grey' };
-    const verticalContentInset = { top: 10, bottom: 10 }
-    const xAxisHeight = 30
-
-return (
+  return (
     <View style={styles.screen}>
-         
-        <Content>
-          <Card>
-            <CardItem header>
-              <Text>
-                {company.stockName} ({company.stockSymbol})
-              </Text>
-            </CardItem>
-            <CardItem>
-              <Body>
-                <Text>
-                  Compounding rate of return: {company.compoundingReturn}
-                </Text>
-                <Text>
-                  Future earnings per share:{" "}
-                  {company.futureEarningsPerShare}
-                </Text>
-                <Text>Time period: 10 years</Text>
-                <Text>Total Dividends: {company.totalDividends}</Text>
-              </Body>
-            </CardItem>
-          </Card>
-
-          <View style={{ height: 200, padding: 20, flexDirection: 'row' }}>
-                <YAxis
-                    data={data}
-                    style={{ marginBottom: xAxisHeight }}
-                    contentInset={verticalContentInset}
-                    svg={axesSvg}
-                />
-                <View style={{ flex: 1, marginLeft: 10 }}>
-                    <LineChart
-                        style={{ flex: 1 }}
-                        data={data}
-                        contentInset={verticalContentInset}
-                        svg={{ stroke: 'rgb(134, 65, 244)' }}
-                    >
-                        <Grid/>
-                    </LineChart>
-                    <XAxis
-                        style={{ marginHorizontal: -10, height: xAxisHeight }}
-                        data={data}
-                        formatLabel={(value, index) => index}
-                        contentInset={{ left: 10, right: 10 }}
-                        svg={axesSvg}
-                    />
+      <Content>
+        <Card>
+          <CardItem header>
+            <Text>
+              {company.data.stockName} ({company.data.stockSymbol})
+            </Text>
+            <View>
+              {company.logo != "" && (
+                <View>
+                  <Image
+                    resizeMode="center"
+                    style={styles.image}
+                    source={{ uri: company.logo }}
+                  />
                 </View>
+              )}
+              {/* Domain */}
             </View>
+          </CardItem>
+          <CardItem>
+            <Body>
+              <Text>
+                Compounding rate of return: {company.data.compoundingReturn}
+              </Text>
+              <Text>
+                Future earnings per share: {company.data.futureEarningsPerShare}
+              </Text>
+              <Text>Time period: 10 years</Text>
+              <Text>Total Dividends: {company.data.totalDividends}</Text>
+            </Body>
+          </CardItem>
+        </Card>
 
-          {/* <LineChart
+        <View style={{ height: 200, padding: 20, flexDirection: "row" }}>
+          <YAxis
+            data={data}
+            style={{ marginBottom: xAxisHeight }}
+            contentInset={verticalContentInset}
+            svg={axesSvg}
+          />
+          <View style={{ flex: 1, marginLeft: 10 }}>
+            <LineChart
+              style={{ flex: 1 }}
+              data={data}
+              contentInset={verticalContentInset}
+              svg={{ stroke: "rgb(134, 65, 244)" }}
+            >
+              <Grid />
+            </LineChart>
+            <XAxis
+              style={{ marginHorizontal: -10, height: xAxisHeight }}
+              data={data}
+              formatLabel={(value, index) => index}
+              contentInset={{ left: 10, right: 10 }}
+              svg={axesSvg}
+            />
+          </View>
+        </View>
+
+        {/* <LineChart
                 style={{ height: 200 }}
                 data={data}
                 svg={{ stroke: 'rgb(134, 65, 244)' }}
@@ -92,28 +102,30 @@ return (
             >
                 <Grid />
             </LineChart> */}
-
-        </Content>
-      
+      </Content>
     </View>
-)
-}
+  );
+};
 
 CompanyDetailsScreen.navigationOptions = {
-    headerTitle: 'Company Details',
-    headerStyle: {
-        backgroundColor: Platform.OS === 'android' ? Colors.primaryColor : ''
-    },
-    headerTintColor: Platform.OS === 'android' ? 'white' : Colors.primaryColor
+  headerTitle: "Company Details",
+  headerStyle: {
+    backgroundColor: Platform.OS === "android" ? Colors.primaryColor : "",
+  },
+  headerTintColor: Platform.OS === "android" ? "white" : Colors.primaryColor,
 };
 
 const styles = StyleSheet.create({
-    screen: {
-        flex: 1,
-        justifyContent: 'center',
-        // alignItems: 'center'
-        backgroundColor: 'white'
-    }
+  screen: {
+    flex: 1,
+    justifyContent: "center",
+    // alignItems: 'center'
+    backgroundColor: "white",
+  },
+  image: {
+    width: 150,
+    height: 58,
+  },
 });
 
-export default CompanyDetailsScreen
+export default CompanyDetailsScreen;

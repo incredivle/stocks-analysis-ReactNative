@@ -55,6 +55,7 @@ const AddCompanyScreen = (props) => {
           setErrorMessage("Could not find company");
         } else {
           setCompanyData(response.data);
+          console.log(response.data);
 
           axios
 
@@ -105,6 +106,8 @@ const AddCompanyScreen = (props) => {
     props.addNewCompany(companyData, logo, domain);
     setDisplayData(false);
     setNewCompany("");
+    setLogo("");
+    setDomain("");
     props.navigation.navigate({ routeName: "Home" });
   };
 
@@ -113,6 +116,8 @@ const AddCompanyScreen = (props) => {
     setCompanyData({});
     setDisplayData(false);
     setNewCompany("");
+    setLogo("");
+    setDomain("");
   };
 
   const refreshHandler = () => {
@@ -120,6 +125,8 @@ const AddCompanyScreen = (props) => {
     setDisplayData(false);
     setNewCompany("");
     setErrorMessage("");
+    setLogo("");
+    setDomain("");
   };
 
   if (isLoading) {
@@ -132,8 +139,12 @@ const AddCompanyScreen = (props) => {
     );
   } else if (errorMessage != "") {
     return (
-      <View style={styles.screen}>
-        <Text>{errorMessage}</Text>
+      <Container contentContainerStyle={styles.screen}>
+        <Content>
+
+       
+      {/* <View > */}
+        <Text style={styles.errorText}>{errorMessage}</Text>
         <Button
           rounded
           bordered
@@ -142,7 +153,9 @@ const AddCompanyScreen = (props) => {
         >
           <Text style={styles.submitButtonText}>New Company</Text>
         </Button>
-      </View>
+      {/* </View> */}
+      </Content>
+      </Container>
     );
   } else if (!displayData) {
     return (
@@ -164,6 +177,7 @@ const AddCompanyScreen = (props) => {
                 onChangeText={changeTextHandler}
                 value={newCompany}
                 style={styles.input}
+                placeholderTextColor='white'
               />
             </Item>
           </Form>
@@ -173,6 +187,7 @@ const AddCompanyScreen = (props) => {
               bordered
               style={styles.submitButton}
               onPress={submitHandler}
+              
             >
               <Text style={styles.submitButtonText}>Submit</Text>
             </Button>
@@ -185,8 +200,8 @@ const AddCompanyScreen = (props) => {
   } else {
     // make this card into a component - keep buttons in this one
     return (
-      <Container>
-        <Content>
+      <Container >
+        <Content contentContainerStyle={styles.screen}>
           <Card>
             <CardItem header>
               <Text>
@@ -194,9 +209,9 @@ const AddCompanyScreen = (props) => {
               </Text>
               <View>
                 {logo != "" && (
-                  <Image style={styles.image} source={{ uri: logo }} />
+                  <Image resizeMode="center" style={styles.image} source={{ uri: logo }} />
                 )}
-                
+                {/* Domain */}
               </View>
             </CardItem>
             <CardItem>
@@ -251,27 +266,28 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   image: {
-    width: 66,
+    width: 150,
     height: 58,
   },
   screen: {
     flex: 1,
     justifyContent: "center",
     // alignItems: "center",
-    backgroundColor: "white",
+    backgroundColor: Colors.primaryColor,
   },
   input: {
-    flex: 1,
+    // flex: 1,
     // justifyContent: 'center',
-    alignItems: "center",
-    alignContent: "center",
+    // alignItems: "center",
+    // alignContent: "center",
+    color: 'white'
   },
   submitButtonContainer: {
     alignItems: "center",
   },
   submitButton: {
-    backgroundColor: Colors.primaryColor,
-    borderColor: Colors.primaryColor,
+    backgroundColor: Colors.accentColor,
+    borderColor: Colors.accentColor,
     margin: 10,
     width: "50%",
     justifyContent: "center",
@@ -291,6 +307,11 @@ const styles = StyleSheet.create({
     width: "30%",
     justifyContent: "center",
   },
+  errorText: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center'
+  }
 });
 
 const mapStateToProps = (state) => {
