@@ -82,10 +82,10 @@ const HomeScreen = (props) => {
     );
   } else {
     return (
-      <Container >
+      // <Container >
 
       
-      {/* <Content contentContainerStyle={styles.screen}> */}
+      // <Content >
       <View style={styles.topView}>
         <SwipeListView
           data={props.savedCompanies}
@@ -154,8 +154,8 @@ const HomeScreen = (props) => {
           <Text style={styles.logoutButtonText}>Logout</Text>
         </Button>
       </View>
-      {/* </Content> */}
-      </Container>
+      // </Content>
+      // </Container>
     );
   }
 };
@@ -171,6 +171,10 @@ const styles = StyleSheet.create({
     alignItems: "center",
     backgroundColor: Colors.primaryColor
    
+  },
+  topView: {
+    flex: 1,
+    backgroundColor: Colors.primaryColor
   },
  
   buttonOne: {
@@ -189,11 +193,13 @@ const styles = StyleSheet.create({
     color: 'white'
   },
   deleteButton: {
-    marginTop: 10,
-    marginLeft: 10,
-    marginRight: 10,
-    marginBottom: 10,
-    maxWidth: '22%'
+    marginTop: 0,
+    marginLeft: 0,
+    marginRight: 0,
+    marginBottom: 0,
+    maxWidth: '25%',
+    height: 60,
+    borderRadius: 0
   },
   deleteText: {
     color: "white",

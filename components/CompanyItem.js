@@ -18,25 +18,25 @@ const CompanyItem = (props) => {
     
   return (
 
-    // <View>
-    //     <Text>{props.name}</Text>
-    // </View>
+    <View style={styles.companyItem}>
+        <Text style={styles.text}>{props.name}</Text>
+    </View>
 
 
     
-    <View>
+    // <View>
 
    
       
-          <Card transparent>
-            <CardItem header bordered style={styles.card}>
-              <Body>
-                <Text style={styles.text}>{props.name}</Text>
-              </Body>
-            </CardItem>
-          </Card>
+    //       <Card transparent >
+    //         <CardItem header bordered style={styles.card}>
+    //           <Body>
+    //             <Text style={styles.text}>{props.name}</Text>
+    //           </Body>
+    //         </CardItem>
+    //       </Card>
         
-          </View>
+    //       </View>
 
   );
 };
@@ -45,10 +45,22 @@ const styles = StyleSheet.create({
     card: {
         // width: 300,
         // height: 100,
+        backgroundColor: Colors.primaryColor
         
     },
     text: {
-      color: Colors.primaryColor  
+      color: 'white',
+      marginLeft: 10
+      
+    },
+    companyItem: {
+      backgroundColor: Colors.primaryColor,
+      height: 60,
+      width: '100%',
+      justifyContent: 'center',
+      borderBottomColor: 'white',
+      borderBottomWidth: 0.5,
+       
     }
 })
 
