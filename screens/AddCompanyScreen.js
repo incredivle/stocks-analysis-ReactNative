@@ -7,6 +7,7 @@ import {
   ActivityIndicator,
   KeyboardAvoidingView,
   Image,
+  
 } from "react-native";
 import {
   Container,
@@ -73,23 +74,20 @@ const AddCompanyScreen = (props) => {
             // Need to catch errors
             .catch((err) => {
               console.log(err);
+              setIsLoading(false);
               setDisplayData(true);
-              
 
               return null;
             });
         }
       })
 
-      // Need to catch errors
       .catch((err) => {
         console.log(err);
         setErrorMessage("Could not find company");
         setIsLoading(false);
         return null;
       });
-
-   
 
     // Add in urls from Clearbit api if using it.
   };
@@ -101,10 +99,10 @@ const AddCompanyScreen = (props) => {
       setDisplayData(true);
       setIsLoading(false);
     }
-  }, [logo]);
+  }, [logo, domain]);
 
   const saveHandler = () => {
-    props.addNewCompany(companyData);
+    props.addNewCompany(companyData, logo, domain);
     setDisplayData(false);
     setNewCompany("");
     props.navigation.navigate({ routeName: "Home" });
@@ -198,6 +196,7 @@ const AddCompanyScreen = (props) => {
                 {logo != "" && (
                   <Image style={styles.image} source={{ uri: logo }} />
                 )}
+                
               </View>
             </CardItem>
             <CardItem>

@@ -28,10 +28,10 @@ const CompanyItem = (props) => {
 
    
       
-          <Card>
-            <CardItem header bordered>
+          <Card transparent>
+            <CardItem header bordered style={styles.card}>
               <Body>
-                <Text>{props.name}</Text>
+                <Text style={styles.text}>{props.name}</Text>
               </Body>
             </CardItem>
           </Card>
@@ -43,8 +43,12 @@ const CompanyItem = (props) => {
 
 const styles = StyleSheet.create({
     card: {
-        width: 300,
-        height: 100
+        // width: 300,
+        // height: 100,
+        
+    },
+    text: {
+      color: Colors.primaryColor  
     }
 })
 

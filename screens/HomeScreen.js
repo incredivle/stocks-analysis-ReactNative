@@ -43,9 +43,9 @@ const HomeScreen = (props) => {
   ) {
     return (
       <Container>
-        <Content contentContainerStyle={styles.screen}>
-          <Text>Welcome to Invester!</Text>
-          <Text>Short explanation about the purpose of the app</Text>
+        <Content contentContainerStyle={styles.introScreen}>
+          <Text style={styles.buttonText}>Welcome to Invester!</Text>
+          <Text style={styles.buttonText}>Short explanation about the purpose of the app</Text>
           <Button
             rounded
             style={styles.buttonOne}
@@ -53,7 +53,7 @@ const HomeScreen = (props) => {
               props.navigation.navigate({ routeName: "AddCompanyScreen" });
             }}
           >
-            <Text>New Company</Text>
+            <Text style={styles.buttonText}>New Company</Text>
           </Button>
           <Button
             rounded
@@ -81,16 +81,16 @@ const HomeScreen = (props) => {
     );
   } else {
     return (
-      <Container contentContainerStyle={styles.screen}>
+      <Container >
 
       
-      {/* <Content> */}
-      <View >
+      {/* <Content contentContainerStyle={styles.screen}> */}
+      <View style={styles.topView}>
         <SwipeListView
           data={props.savedCompanies}
           renderItem={(data, rowMap) => (
             <TouchableOpacity
-              activeOpacity={0.7}
+              activeOpacity={1}
               onPress={() => {
                 props.navigation.navigate({
                   routeName: "CompanyDetailsScreen",
@@ -100,12 +100,13 @@ const HomeScreen = (props) => {
                 });
               }}
             >
-              <CompanyItem name={data.item.data.stockName} />
+              <CompanyItem name={data.item.data.data.stockName} />
             </TouchableOpacity>
           )}
           renderHiddenItem={(data, rowMap) => (
             <View>
               <Button
+              
                 style={styles.deleteButton}
                 danger
                 onPress={() => {
@@ -163,32 +164,35 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
   },
-  screen: {
+  introScreen: {
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: 'white'
+    backgroundColor: Colors.primaryColor
+   
   },
+ 
   buttonOne: {
-    backgroundColor: Colors.primaryColor,
+    backgroundColor: Colors.accentColor,
     margin: 10,
     width: "50%",
     justifyContent: "center",
   },
   buttonTwo: {
-    borderColor: Colors.primaryColor,
+    borderColor: Colors.accentColor,
     margin: 10,
     width: "50%",
     justifyContent: "center",
   },
   buttonText: {
-    color: Colors.primaryColor,
+    color: 'white'
   },
   deleteButton: {
     marginTop: 10,
     marginLeft: 10,
     marginRight: 10,
     marginBottom: 10,
+    maxWidth: '22%'
   },
   deleteText: {
     color: "white",
@@ -209,6 +213,7 @@ const styles = StyleSheet.create({
 
 // This function allows the returned state to be under props in the HomeScreen component, ie. props.company
 const mapStateToProps = (state) => {
+  
   return { company: state.company, savedCompanies: state.fetchCompanies };
 };
 

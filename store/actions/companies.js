@@ -37,7 +37,7 @@ export const fetchSavedCompanies = () => {
     }
 }
 
-export const addNewCompany = (data) => {
+export const addNewCompany = (data, logo, domain) => {
     // getState here gives access to all of store.
     return async (dispatch, getState) => {
         const token = getState().auth.token;
@@ -49,10 +49,15 @@ export const addNewCompany = (data) => {
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify(data)
+            body: JSON.stringify({
+                data: data,
+                logo: logo,
+                domain: domain
+            })
         });
 
         const resData = await response.json();
+        console.log(resData)
 
         
         dispatch ({
@@ -60,6 +65,8 @@ export const addNewCompany = (data) => {
             // can add in id here from resData.id, make payload into an object containing data and id
             payload: {
                 data: data,
+                logo: logo,
+                domain: domain,
                 id: resData.name
             }
         });

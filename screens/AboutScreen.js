@@ -27,6 +27,8 @@ return (
             headerStyle={{  color: 'white' }}
             contentStyle={{ backgroundColor: 'white' }}
           />
+
+          <Text>Created my free logo at LogoMakr.com</Text>
       </View>
 )
 }

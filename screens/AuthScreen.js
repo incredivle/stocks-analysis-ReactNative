@@ -9,6 +9,7 @@ import {
   ScrollView,
   ActivityIndicator,
   Alert,
+  Image
 } from "react-native";
 import { Container, Content, Form, Input, Item, Button } from "native-base";
 import { useDispatch } from "react-redux";
@@ -16,6 +17,7 @@ import { useDispatch } from "react-redux";
 import Colors from "../constants/Colors";
 import AuthForm from "../components/AuthForm";
 import * as authActions from "../store/actions/auth";
+import logo from "../assets/logo_text_orange.png";
 
 // Need to do error checking on forms. Custom component maybe?
 // have only one form
@@ -70,6 +72,10 @@ const AuthScreen = (props) => {
         behavior={Platform.OS == "ios" ? "padding" : "height"}
         style={styles.screen}
       >
+        <View style={styles.image}>
+          <Image source={logo}/>
+        </View>
+
         {/* <Content > */}
           <AuthForm
             emailValue={email}
@@ -95,7 +101,7 @@ const AuthScreen = (props) => {
             )}
           </View>
           <View style={styles.signUp}>
-            <Text>Don't have an account?</Text>
+            <Text style={styles.changeText}>Don't have an account?</Text>
             <TouchableOpacity onPress={() => setSignUpView(true)}>
               <Text style={styles.signUpButton}>Sign up.</Text>
             </TouchableOpacity>
@@ -109,6 +115,9 @@ const AuthScreen = (props) => {
         behavior={Platform.OS == "ios" ? "padding" : "height"}
         style={styles.screen}
       >
+        <View style={styles.image}>
+          <Image source={logo}/>
+        </View>
         {/* <Content > */}
           <AuthForm
             emailValue={email}
@@ -133,7 +142,7 @@ const AuthScreen = (props) => {
             )}
           </View>
           <View style={styles.signUp}>
-            <Text>Already have an account?</Text>
+            <Text style={styles.changeText}>Already have an account?</Text>
             <TouchableOpacity onPress={() => setSignUpView(false)}>
               <Text style={styles.signUpButton}>Login.</Text>
             </TouchableOpacity>
@@ -150,7 +159,11 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     // alignItems: "center",
+    backgroundColor: Colors.primaryColor
     
+  },
+  image: {
+    // marginRight: 100
   },
  
   submitButtonContainer: {
@@ -159,8 +172,8 @@ const styles = StyleSheet.create({
     
   },
   submitButton: {
-    backgroundColor: Colors.primaryColor,
-    borderColor: Colors.primaryColor,
+    backgroundColor: Colors.accentColor,
+    borderColor: Colors.accentColor,
     margin: 10,
     width: "50%",
     justifyContent: "center",
@@ -187,9 +200,12 @@ const styles = StyleSheet.create({
     
   },
   signUpButton: {
-    color: Colors.primaryColor,
+    color: Colors.accentColor,
     fontWeight: "bold",
   },
+  changeText: {
+    color: 'white'
+  }
 });
 
 export default AuthScreen;

@@ -30,6 +30,10 @@ const AuthForm = (props) => {
             keyboardType="email-address"
             onChangeText={(text) => {props.changeEmailHandler(text)}}
             value={props.email}
+            bordered
+            rounded
+            placeholderTextColor='white'
+            style={styles.input}
           />
         </Item>
         <Item>
@@ -42,6 +46,10 @@ const AuthForm = (props) => {
             secureTextEntry
             onChangeText={(text) => {props.changePasswordHandler(text)}}
             value={props.password}
+            bordered
+            rounded
+            placeholderTextColor='white'
+            style={styles.input}
           />
         </Item>
       </Form>
@@ -56,6 +64,10 @@ const styles = StyleSheet.create({
     // alignItems: "center",
     
   },
+  input: {
+    marginRight: 50,
+    color: 'white'
+  }
 });
 
 export default AuthForm;
