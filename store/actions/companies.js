@@ -1,16 +1,4 @@
-// export const ADD_NEW_COMPANY = 'ADD_NEW_COMPANY';
 
-// export const addNewCompany = (data) => {
-//     return {type: ADD_NEW_COMPANY, data: data};
-// }
-
-// export const addNewCompany = (data) => {
-    
-//     return {
-//         type: 'NEW_COMPANY',
-//         payload: data
-//     };
-// };
 
 import Company from "../../models/company";
 
@@ -28,7 +16,7 @@ export const fetchSavedCompanies = () => {
         const loadedCompanies = [];
 
         for (const key in resData){
-            loadedCompanies.push(new Company (key, 'u1', resData[key]))
+            loadedCompanies.push(new Company (key, userId, resData[key]))
         }
         dispatch({
             type: 'FETCH_SAVED_COMPANIES',

@@ -2,7 +2,6 @@ import React from "react";
 import { View, FlatList, StyleSheet, TouchableOpacity } from "react-native";
 import Colors from "../constants/Colors";
 
-
 import {
   Container,
   Header,
@@ -11,23 +10,18 @@ import {
   CardItem,
   Body,
   Text,
-
 } from "native-base";
 
 const CompanyItem = (props) => {
-    
   return (
-
-    <View style={styles.companyItem}>
+    <View style={styles.companyContainer}>
+      <View style={styles.companyItem}>
         <Text style={styles.text}>{props.name}</Text>
+      </View>
     </View>
 
-
-    
     // <View>
 
-   
-      
     //       <Card transparent >
     //         <CardItem header bordered style={styles.card}>
     //           <Body>
@@ -35,33 +29,36 @@ const CompanyItem = (props) => {
     //           </Body>
     //         </CardItem>
     //       </Card>
-        
-    //       </View>
 
+    //       </View>
   );
 };
 
 const styles = StyleSheet.create({
-    card: {
-        // width: 300,
-        // height: 100,
-        backgroundColor: Colors.primaryColor
-        
-    },
-    text: {
-      color: 'white',
-      marginLeft: 10
-      
-    },
-    companyItem: {
-      backgroundColor: Colors.primaryColor,
-      height: 60,
-      width: '100%',
-      justifyContent: 'center',
-      borderBottomColor: 'white',
-      borderBottomWidth: 0.5,
-       
-    }
-})
+  card: {
+    // width: 300,
+    // height: 100,
+    backgroundColor: "white",
+  },
+  companyContainer: {
+    flex: 1,
+    alignItems: 'center'
+  },
+  text: {
+    color: Colors.primaryColor,
+    marginLeft: 20,
+  },
+  companyItem: {
+    backgroundColor: "white",
+    height: 60,
+    width: "90%",
+    justifyContent: "center",
+
+    borderColor: Colors.accentColor,
+    borderWidth: 0.5,
+    borderRadius: 30,
+    // margin: 10,
+  },
+});
 
 export default CompanyItem;

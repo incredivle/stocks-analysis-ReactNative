@@ -5,6 +5,7 @@ import {
   StyleSheet,
   TouchableOpacity,
   ActivityIndicator,
+  ImageBackground
 } from "react-native";
 import { Container, Text, Content, Button } from "native-base";
 import { useSelector, connect, useDispatch } from "react-redux";
@@ -16,6 +17,7 @@ import { fetchSavedCompanies } from "../store/actions/companies";
 import { deleteCompany } from "../store/actions/companies";
 import * as authActions from "../store/actions/auth";
 import { set } from "react-native-reanimated";
+import background from "../assets/background_image.png"
 
 const HomeScreen = (props) => {
   const dispatch = useDispatch();
@@ -47,7 +49,7 @@ const HomeScreen = (props) => {
         <Content contentContainerStyle={styles.introScreen}>
           <Text style={styles.buttonText}>Welcome to Invester!</Text>
           <Text style={styles.buttonText}>Short explanation about the purpose of the app</Text>
-          <Button
+          {/* <Button
             rounded
             style={styles.buttonOne}
             onPress={() => {
@@ -65,7 +67,7 @@ const HomeScreen = (props) => {
             }}
           >
             <Text style={styles.buttonText}>More Info</Text>
-          </Button>
+          </Button> */}
           <Button
             rounded
             bordered
@@ -87,6 +89,13 @@ const HomeScreen = (props) => {
       
       // <Content >
       <View style={styles.topView}>
+        <ImageBackground source={background} style={styles.image}>
+
+        
+        <View style={styles.secondView}>
+
+        
+        <Text style={styles.headerText}>My Saved Companies</Text>
         <SwipeListView
           data={props.savedCompanies}
           renderItem={(data, rowMap) => (
@@ -142,6 +151,9 @@ const HomeScreen = (props) => {
           )}
           keyExtractor={(item, index) => index.toString()}
         /> */}
+        <View style={styles.logoutButtonContainer}>
+
+        
         <Button
           rounded
           bordered
@@ -153,12 +165,22 @@ const HomeScreen = (props) => {
         >
           <Text style={styles.logoutButtonText}>Logout</Text>
         </Button>
+        </View>
+        </View>
+        </ImageBackground>
       </View>
       // </Content>
       // </Container>
     );
   }
 };
+
+// HomeScreen.navigationOptions = {
+//   headerMode: 'none'
+  
+// };
+
+
 
 const styles = StyleSheet.create({
   loading: {
@@ -175,8 +197,26 @@ const styles = StyleSheet.create({
   topView: {
     flex: 1,
     backgroundColor: Colors.primaryColor
+    
   },
- 
+  secondView: {
+    flex: 1,
+    backgroundColor: 'white',
+    marginTop: 100,
+    borderTopLeftRadius: 30,
+    borderTopRightRadius: 30
+  },
+  image: {
+    flex: 1,
+    resizeMode: "cover",
+    justifyContent: "center"
+  },
+ headerText: {
+    color: Colors.primaryColor,
+    margin: 20,
+    fontSize: 30
+  
+ },
   buttonOne: {
     backgroundColor: Colors.accentColor,
     margin: 10,
@@ -193,27 +233,32 @@ const styles = StyleSheet.create({
     color: 'white'
   },
   deleteButton: {
-    marginTop: 0,
-    marginLeft: 0,
+    marginLeft: 20,
     marginRight: 0,
-    marginBottom: 0,
-    maxWidth: '25%',
+    maxWidth: '40%',
     height: 60,
-    borderRadius: 0
+    borderRadius: 30,
+
   },
   deleteText: {
     color: "white",
   },
+  logoutButtonContainer: {
+    flex: 1,
+    justifyContent: 'flex-end',
+    alignItems: 'flex-end'
+  },
   logoutButton: {
     borderColor: Colors.primaryColor,
-    backgroundColor: Colors.primaryColor,
+    // backgroundColor: Colors.primaryColor,
     margin: 10,
     width: "50%",
     alignSelf: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
+    
   },
   logoutButtonText: {
-    color: 'white',
+    color: Colors.primaryColor,
   },
   
 });

@@ -4,11 +4,13 @@ import {
   Text,
   FlatList,
   StyleSheet,
-  TouchableOpacity
+  TouchableOpacity,
+  ImageBackground
 } from 'react-native';
 import { Container, Header, Content, Accordion } from "native-base";
 
 import Colors from '../constants/Colors';
+import background from "../assets/background_image.png"
 
 const dataArray = [
     { title: "First Element", content: "Lorem ipsum dolor sit amet" },
@@ -20,7 +22,9 @@ const AboutScreen = props => {
 return (
     
         <View style={styles.screen}>
+          <ImageBackground source={background} style={styles.image}>
 
+          
         
           <Accordion
             dataArray={dataArray}
@@ -29,6 +33,7 @@ return (
           />
 
           <Text>Created my free logo at LogoMakr.com</Text>
+          </ImageBackground>
       </View>
 )
 }
@@ -47,7 +52,12 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         // alignItems: 'center',
         backgroundColor: 'white',
-    }
+    },
+    image: {
+      flex: 1,
+      resizeMode: "cover",
+      justifyContent: "center"
+    },
 });
 
 export default AboutScreen

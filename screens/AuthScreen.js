@@ -17,7 +17,7 @@ import { useDispatch } from "react-redux";
 import Colors from "../constants/Colors";
 import AuthForm from "../components/AuthForm";
 import * as authActions from "../store/actions/auth";
-import logo from "../assets/logo_text_orange.png";
+import logo from "../assets/logo_text_light.png";
 
 // Need to do error checking on forms. Custom component maybe?
 // have only one form
@@ -165,7 +165,7 @@ const styles = StyleSheet.create({
     
   },
   image: {
-    // marginRight: 100
+    alignItems: 'center',
   },
  
   submitButtonContainer: {
@@ -180,9 +180,10 @@ const styles = StyleSheet.create({
     width: "50%",
     justifyContent: "center",
     alignItems: "center",
+    marginTop: 20
   },
   submitButtonText: {
-    color: "white",
+    color: Colors.primaryColor,
   },
   // options: {
   //   flexDirection: "row",

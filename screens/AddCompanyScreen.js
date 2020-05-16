@@ -7,7 +7,7 @@ import {
   ActivityIndicator,
   KeyboardAvoidingView,
   Image,
-  
+  ImageBackground,
 } from "react-native";
 import {
   Container,
@@ -28,6 +28,7 @@ import { StackRouter } from "react-navigation";
 
 import Colors from "../constants/Colors";
 import { addNewCompany } from "../store/actions/companies";
+import background from "../assets/background_image.png";
 import getEnvVars from "../environment";
 const { clearbitApiKey } = getEnvVars();
 
@@ -140,21 +141,21 @@ const AddCompanyScreen = (props) => {
   } else if (errorMessage != "") {
     return (
       <Container contentContainerStyle={styles.screen}>
-        <Content>
-
-       
-      {/* <View > */}
-        <Text style={styles.errorText}>{errorMessage}</Text>
-        <Button
-          rounded
-          bordered
-          onPress={refreshHandler}
-          style={styles.submitButton}
-        >
-          <Text style={styles.submitButtonText}>New Company</Text>
-        </Button>
-      {/* </View> */}
-      </Content>
+        <ImageBackground style={styles.backgroundImage} source={background}>
+          <Content>
+            {/* <View > */}
+            <Text style={styles.errorText}>{errorMessage}</Text>
+            <Button
+              rounded
+              bordered
+              onPress={refreshHandler}
+              style={styles.submitButton}
+            >
+              <Text style={styles.submitButtonText}>New Company</Text>
+            </Button>
+            {/* </View> */}
+          </Content>
+        </ImageBackground>
       </Container>
     );
   } else if (!displayData) {
@@ -163,44 +164,47 @@ const AddCompanyScreen = (props) => {
         behavior={Platform.OS == "ios" ? "padding" : "height"}
         style={styles.screen}
       >
-        <View>
-          {/* <Container>
+        <ImageBackground style={styles.backgroundImage} source={background}>
+          <View style={styles.outerFormContainer}>
+            <View style={styles.formContainer}>
+              {/* <Container>
         <Content > */}
-          <Form>
-            <Item>
-              <Input
-                blurOnSubmit
-                autoCapitalize="characters"
-                autoCorrect={false}
-                autoCompleteType="off"
-                placeholder="Company Symbol"
-                onChangeText={changeTextHandler}
-                value={newCompany}
-                style={styles.input}
-                placeholderTextColor='white'
-              />
-            </Item>
-          </Form>
-          <View style={styles.submitButtonContainer}>
-            <Button
-              rounded
-              bordered
-              style={styles.submitButton}
-              onPress={submitHandler}
-              
-            >
-              <Text style={styles.submitButtonText}>Submit</Text>
-            </Button>
-          </View>
-          {/* </Content>
+              <Form>
+                <Item>
+                  <Input
+                    blurOnSubmit
+                    autoCapitalize="characters"
+                    autoCorrect={false}
+                    autoCompleteType="off"
+                    placeholder="Company Symbol"
+                    onChangeText={changeTextHandler}
+                    value={newCompany}
+                    style={styles.input}
+                    placeholderTextColor={Colors.primaryColor}
+                  />
+                </Item>
+              </Form>
+              <View style={styles.submitButtonContainer}>
+                <Button
+                  rounded
+                  bordered
+                  style={styles.submitButton}
+                  onPress={submitHandler}
+                >
+                  <Text style={styles.submitButtonText}>Submit</Text>
+                </Button>
+              </View>
+            </View>
+            {/* </Content>
       </Container> */}
-        </View>
+          </View>
+        </ImageBackground>
       </KeyboardAvoidingView>
     );
   } else {
     // make this card into a component - keep buttons in this one
     return (
-      <Container >
+      <Container>
         <Content contentContainerStyle={styles.screen}>
           <Card>
             <CardItem header>
@@ -209,7 +213,11 @@ const AddCompanyScreen = (props) => {
               </Text>
               <View>
                 {logo != "" && (
-                  <Image resizeMode="center" style={styles.image} source={{ uri: logo }} />
+                  <Image
+                    resizeMode="center"
+                    style={styles.image}
+                    source={{ uri: logo }}
+                  />
                 )}
                 {/* Domain */}
               </View>
@@ -269,25 +277,39 @@ const styles = StyleSheet.create({
     width: 150,
     height: 58,
   },
+  backgroundImage: {
+    flex: 1,
+    resizeMode: "cover",
+    justifyContent: "center",
+  },
   screen: {
     flex: 1,
     justifyContent: "center",
     // alignItems: "center",
     backgroundColor: Colors.primaryColor,
   },
+  outerFormContainer: {
+    // flex: 2,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  formContainer: {
+    backgroundColor: "white",
+    borderRadius: 30,
+    width: "90%",
+    height: 200,
+    justifyContent: "center",
+  },
   input: {
-    // flex: 1,
-    // justifyContent: 'center',
-    // alignItems: "center",
-    // alignContent: "center",
-    color: 'white'
+    color: Colors.primaryColor,
   },
   submitButtonContainer: {
     alignItems: "center",
+    marginTop: 20,
   },
   submitButton: {
-    backgroundColor: Colors.accentColor,
-    borderColor: Colors.accentColor,
+    backgroundColor: Colors.primaryColor,
+    borderColor: Colors.primaryColor,
     margin: 10,
     width: "50%",
     justifyContent: "center",
@@ -309,9 +331,9 @@ const styles = StyleSheet.create({
   },
   errorText: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center'
-  }
+    justifyContent: "center",
+    alignItems: "center",
+  },
 });
 
 const mapStateToProps = (state) => {
