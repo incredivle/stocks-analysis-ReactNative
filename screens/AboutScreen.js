@@ -23,18 +23,23 @@ const AboutScreen = (props) => {
     <View style={styles.screen}>
       <ImageBackground source={background} style={styles.image}>
         <View style={styles.mainContainer}>
-    <Text>
+          <Text style={styles.aboutTitle}>
+            About
+            </Text>
+    <Text style={styles.aboutText}>
       Welcome to Invester! This app is designed to help you decide what stocks to invest in. Add a new company on the 'Add'
-      page and check out your potential returns.
-      Click save to add it to your homepage.
+      page and check out its potential returns.
+      Click save to add it to your homepage. 
     </Text>
         
-        <Accordion
+        {/* <Accordion
           dataArray={dataArray}
-          headerStyle={{ color: "white" }}
+          headerStyle={{ backgroundColor: Colors.primaryColor }}
           contentStyle={{ backgroundColor: "white" }}
           style={styles.accordion}
-        />
+        /> */}
+
+
 
         <Text>Created my free logo at LogoMakr.com</Text>
         </View>
@@ -71,8 +76,19 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 30
 
   },  
+  aboutTitle: {
+    color: Colors.primaryColor,
+    margin: 20,
+    fontSize: 30
+  },
+  aboutText: {
+    color: Colors.primaryColor,
+    margin: 20
+  },
   accordion: {
     borderWidth: 0,
+    margin: 10,
+    color: 'white'
   },
 });
 

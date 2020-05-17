@@ -238,6 +238,7 @@ const styles = StyleSheet.create({
     maxWidth: '40%',
     height: 60,
     borderRadius: 30,
+    marginTop: 10
 
   },
   deleteText: {

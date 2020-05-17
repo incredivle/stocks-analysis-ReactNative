@@ -42,7 +42,8 @@ const styles = StyleSheet.create({
   },
   companyContainer: {
     flex: 1,
-    alignItems: 'center'
+    alignItems: 'center',
+    marginTop: 10
   },
   text: {
     color: Colors.primaryColor,

@@ -20,15 +20,95 @@ import {
   Body,
 } from "native-base";
 import * as Svg from "react-native-svg";
-import { LineChart, Grid, XAxis, YAxis, StackedBarChart } from "react-native-svg-charts";
+import {
+  LineChart,
+  Grid,
+  XAxis,
+  YAxis,
+  StackedBarChart,
+} from "react-native-svg-charts";
 
 import Colors from "../constants/Colors";
 
 const CompanyDetailsScreen = (props) => {
   const company = props.navigation.getParam("company");
 
-  // const data = [50, 10, 40, 95, -4, -24, 85, 91, 35, 53, -53, 24, 50, -20, -80];
-  // const dataTwo = [40, 0, 30, 85, -14, -34, 75, 81, 25, 43, -63, 14, 40, -30, -70];
+  // const [sliderBarDividendPercentage, setSliderBarDividendPercentage] = useState(0);
+
+  const adjustDividend = (sliderBarDividendPercentage) => {
+    
+    
+
+    // Calculate Compounding ROE : i_CompoundROE = (c_EPS - c_Dividend) / c_EPS * i_ROE
+    let compoundingROE =
+      ((company.data.currentEarningsPerShare - sliderBarDividendPercentage) /
+        company.data.currentEarningsPerShare) * company.data.ROE;
+
+    // Future Equity Per Share : i_FuturePerShareEquity = EquityPerShare() * ((1 + i_CompoundROE) ^ i_AnalysisPeriod)
+    let futureEquityPerShare =
+      company.data.currentEquityPerShare * Math.pow(1 + compoundingROE, 10);
+
+    // Future Earnings Per Share : i_FutureEPS = i_FuturePerShareEquity * i_ROE
+    let futureEarningsPerShare = futureEquityPerShare * company.data.ROE;
+
+    retainedEarningsPerShare =
+      company.data.currentEarningsPerShare * (1 - sliderBarDividendPercentage);
+    sumOfDividends =
+      company.data.currentEarningsPerShare * sliderBarDividendPercentage;
+
+    // After 1st year
+    let totalEquityValue = company.data.currentEquityPerShare;
+    totalEquityValue = totalEquityValue + retainedEarningsPerShare;
+
+    // Now sum the retained earnings and paid out dividends
+    let perShareEarning = 0;
+    var counter = 0;
+    let epsReturnsYearly = [];
+    let dividendReturnsYearly = [];
+    let retainedEarningsYearly = [];
+    while (counter < company.data.timePeriodAnalysed) {
+      perShareEarning = totalEquityValue * company.data.ROE;
+      epsReturnsYearly.push(perShareEarning);
+      sumOfDividends =
+        sumOfDividends + perShareEarning * sliderBarDividendPercentage;
+
+      dividendReturnsYearly.push(perShareEarning * sliderBarDividendPercentage);
+
+      totalEquityValue =
+        totalEquityValue +
+        perShareEarning * company.data.retainedEarningsPercentage;
+
+      retainedEarningsYearly.push(
+        perShareEarning * company.data.retainedEarningsPercentage
+      );
+      counter++;
+    }
+
+    // Now use current PE ratio to calculate future price
+    let futureStockPrice =
+      futureEarningsPerShare * company.data.priceToEarningsRatio +
+      sumOfDividends;
+
+    // Calculate compounding return between today's share price and future share price
+    let compoundingReturn =
+      Math.pow(
+        futureStockPrice / company.data.currentStockPrice,
+        1 / company.data.timePeriodAnalysed
+      ) - 1;
+
+    console.log("epsReturnsYearly: ", epsReturnsYearly);
+    console.log("dividendReturnsYearly: ", dividendReturnsYearly);
+    console.log("retainedearningsYearly: ", retainedEarningsYearly);
+    console.log("Future stock price: ", futureStockPrice);
+    console.log("Sum of dividends: ", sumOfDividends);
+    console.log(
+      "Future earnings per share: ",
+      company.data.futureEarningsPerShare
+    );
+  };
+
+  adjustDividend(0.2);
+
   const axesSvg = { fontSize: 10, fill: Colors.primaryColor };
   const verticalContentInset = { top: 10, bottom: 10 }; // set this dynamically: a bit below min of array and bit above max of array
   const xAxisHeight = 30; // set as 10 for 10 years
@@ -36,38 +116,59 @@ const CompanyDetailsScreen = (props) => {
 
   const data = [
     {
-        month: new Date(2015, 0, 1),
-        apples: 3840,
-        bananas: 1920,
-        cherries: 960,
-        dates: 400,
-        oranges: 400,
+      year: 1,
+      dividend: company.data.dividendReturnsYearly[0],
+      retainedEarnings: company.data.retainedEarningsYearly[0],
     },
     {
-        month: new Date(2015, 1, 1),
-        apples: 1600,
-        bananas: 1440,
-        cherries: 960,
-        dates: 400,
+      year: 2,
+      dividend: company.data.dividendReturnsYearly[1],
+      retainedEarnings: company.data.retainedEarningsYearly[1],
     },
     {
-        month: new Date(2015, 2, 1),
-        apples: 640,
-        bananas: 960,
-        cherries: 3640,
-        dates: 400,
+      year: 3,
+      dividend: company.data.dividendReturnsYearly[2],
+      retainedEarnings: company.data.retainedEarningsYearly[2],
     },
     {
-        month: new Date(2015, 3, 1),
-        apples: 3320,
-        bananas: 480,
-        cherries: 640,
-        dates: 400,
+      year: 4,
+      dividend: company.data.dividendReturnsYearly[3],
+      retainedEarnings: company.data.retainedEarningsYearly[3],
     },
-]
+    {
+      year: 5,
+      dividend: company.data.dividendReturnsYearly[4],
+      retainedEarnings: company.data.retainedEarningsYearly[4],
+    },
+    {
+      year: 6,
+      dividend: company.data.dividendReturnsYearly[5],
+      retainedEarnings: company.data.retainedEarningsYearly[5],
+    },
+    {
+      year: 7,
+      dividend: company.data.dividendReturnsYearly[6],
+      retainedEarnings: company.data.retainedEarningsYearly[6],
+    },
+    {
+      year: 8,
+      dividend: company.data.dividendReturnsYearly[7],
+      retainedEarnings: company.data.retainedEarningsYearly[7],
+    },
+    {
+      year: 9,
+      dividend: company.data.dividendReturnsYearly[8],
+      retainedEarnings: company.data.retainedEarningsYearly[8],
+    },
+    {
+      year: 9,
+      dividend: company.data.dividendReturnsYearly[9],
+      retainedEarnings: company.data.retainedEarningsYearly[9],
+    },
+  ];
 
-const colors = ['#7b4173', '#a55194', '#ce6dbd', '#de9ed6']
-const keys = ['apples', 'bananas', 'cherries', 'dates']
+  const colors = [Colors.primaryColor, Colors.accentColor];
+  const keys = ["dividend", "retainedEarnings"];
 
   return (
     <View style={styles.screen}>
@@ -93,13 +194,33 @@ const keys = ['apples', 'bananas', 'cherries', 'dates']
           <CardItem style={styles.card}>
             <Body>
               <Text style={styles.text}>
-                Compounding rate of return: {company.data.compoundingReturn}
+                The current stock price is $
+                {company.data.currentStockPrice.toFixed(2)}. In 10 years, the
+                future stock price is projected to be $
+                {company.data.futureStockPrice.toFixed(2)}.
+              </Text>
+
+              <Text style={styles.text}>
+                This generates a compounding rate of return of{" "}
+                {company.data.compoundingReturn.toFixed(2) * 100}%
               </Text>
               <Text style={styles.text}>
-                Future earnings per share: {company.data.futureEarningsPerShare}
+                {company.data.stockName}'s current profit is $
+                {company.data.totalCurrentProfit.toFixed(2)}{" "}
               </Text>
+              <Text style={styles.text}>
+                In 10 years, the total profit will be $
+                {(
+                  company.data.totalNumberOfShares *
+                  company.data.futureEarningsPerShare
+                ).toFixed(2)}
+                {/* Round to million/billion */}
+              </Text>
+
               <Text style={styles.text}>Time period: 10 years</Text>
-              <Text style={styles.text}>Total Dividends: {company.data.totalDividends}</Text>
+              <Text style={styles.text}>
+                Total Dividends: ${company.data.totalDividends.toFixed(2)}
+              </Text>
             </Body>
           </CardItem>
         </Card>
@@ -121,13 +242,13 @@ const keys = ['apples', 'bananas', 'cherries', 'dates']
             svg={axesSvg}
           />
           <View style={{ flex: 1, marginLeft: 10 }}>
-          <StackedBarChart
-                style={{ height: 200 }}
-                keys={keys}
-                colors={colors}
-                data={data}
-                showGrid={false}
-                contentInset={{ top: 30, bottom: 30 }}
+            <StackedBarChart
+              style={{ height: 200 }}
+              keys={keys}
+              colors={colors}
+              data={data}
+              showGrid={true}
+              contentInset={{ top: 30, bottom: 30 }}
             />
             <XAxis
               style={{ marginHorizontal: -10, height: xAxisHeight }}
@@ -165,18 +286,18 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     // alignItems: 'center'
-    backgroundColor: 'white',
+    backgroundColor: "white",
   },
   image: {
     width: 150,
     height: 58,
   },
   card: {
-    backgroundColor: 'white'
+    backgroundColor: "white",
   },
   text: {
-    color: Colors.primaryColor
-  }
+    color: Colors.primaryColor,
+  },
 });
 
 export default CompanyDetailsScreen;
