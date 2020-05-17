@@ -33,16 +33,29 @@ import Colors from "../constants/Colors";
 const CompanyDetailsScreen = (props) => {
   const company = props.navigation.getParam("company");
 
+  console.log(
+    "Max retainedEarningsYearly: ",
+    Math.max(...company.data.retainedEarningsYearly)
+  );
+  console.log("retainedEarningsYearly: ", company.data.retainedEarningsYearly);
+  console.log(
+    "Max dividendReturnsYearly: ",
+    Math.max(...company.data.dividendReturnsYearly)
+  );
+  console.log("dividendReturnsYearly: ", company.data.dividendReturnsYearly);
+
+  let graphYAxisMax =
+    Math.max(...company.data.retainedEarningsYearly) +
+    Math.max(...company.data.dividendReturnsYearly);
+
   // const [sliderBarDividendPercentage, setSliderBarDividendPercentage] = useState(0);
 
   const adjustDividend = (sliderBarDividendPercentage) => {
-    
-    
-
     // Calculate Compounding ROE : i_CompoundROE = (c_EPS - c_Dividend) / c_EPS * i_ROE
     let compoundingROE =
       ((company.data.currentEarningsPerShare - sliderBarDividendPercentage) /
-        company.data.currentEarningsPerShare) * company.data.ROE;
+        company.data.currentEarningsPerShare) *
+      company.data.ROE;
 
     // Future Equity Per Share : i_FuturePerShareEquity = EquityPerShare() * ((1 + i_CompoundROE) ^ i_AnalysisPeriod)
     let futureEquityPerShare =
@@ -96,15 +109,15 @@ const CompanyDetailsScreen = (props) => {
         1 / company.data.timePeriodAnalysed
       ) - 1;
 
-    console.log("epsReturnsYearly: ", epsReturnsYearly);
-    console.log("dividendReturnsYearly: ", dividendReturnsYearly);
-    console.log("retainedearningsYearly: ", retainedEarningsYearly);
-    console.log("Future stock price: ", futureStockPrice);
-    console.log("Sum of dividends: ", sumOfDividends);
-    console.log(
-      "Future earnings per share: ",
-      company.data.futureEarningsPerShare
-    );
+    // console.log("epsReturnsYearly: ", epsReturnsYearly);
+    // console.log("dividendReturnsYearly: ", dividendReturnsYearly);
+    // console.log("retainedearningsYearly: ", retainedEarningsYearly);
+    // console.log("Future stock price: ", futureStockPrice);
+    // console.log("Sum of dividends: ", sumOfDividends);
+    // console.log(
+    //   "Future earnings per share: ",
+    //   company.data.futureEarningsPerShare
+    // );
   };
 
   adjustDividend(0.2);
@@ -113,6 +126,7 @@ const CompanyDetailsScreen = (props) => {
   const verticalContentInset = { top: 10, bottom: 10 }; // set this dynamically: a bit below min of array and bit above max of array
   const xAxisHeight = 30; // set as 10 for 10 years
   // // Labelled axis?
+  const contentInset = { top: 20, bottom: 20, left: 20, right: 20 };
 
   const data = [
     {
@@ -168,7 +182,7 @@ const CompanyDetailsScreen = (props) => {
   ];
 
   const colors = [Colors.primaryColor, Colors.accentColor];
-  const keys = ["dividend", "retainedEarnings"];
+  const keys = ["retainedEarnings", "dividend" ];
 
   return (
     <View style={styles.screen}>
@@ -225,49 +239,51 @@ const CompanyDetailsScreen = (props) => {
           </CardItem>
         </Card>
 
-        {/* <StackedBarChart
-                style={{ height: 200 }}
-                keys={keys}
-                colors={colors}
-                data={data}
-                showGrid={false}
-                contentInset={{ top: 30, bottom: 30 }}
-            /> */}
-
-        <View style={{ height: 200, padding: 20, flexDirection: "row" }}>
-          <YAxis
-            data={data}
-            style={{ marginBottom: xAxisHeight, height: xAxisHeight }}
-            contentInset={verticalContentInset}
-            svg={axesSvg}
-          />
-          <View style={{ flex: 1, marginLeft: 10 }}>
+        <View
+          style={{ height: 200, padding: 10, marginLeft: 30, marginRight: 30 }}
+        >
+          <View style={{ flex: 1, marginLeft: 0, marginRight: 50 }}>
+            <YAxis
+              data={data}
+              contentInset={contentInset}
+              svg={{
+                fill: "grey",
+                fontSize: 10,
+              }}
+              numberOfTicks={10}
+              formatLabel={(value) => `$${value}`}
+              style={{ width: 30, height: 200 }}
+              yAccessor={({ index }) => index}
+              min={0}
+              max={graphYAxisMax}
+            />
+          </View>
+          <View style={{ marginLeft: 20 }}>
             <StackedBarChart
               style={{ height: 200 }}
               keys={keys}
               colors={colors}
               data={data}
               showGrid={true}
-              contentInset={{ top: 30, bottom: 30 }}
+              contentInset={contentInset}
+              spacingInner={0.02}
+
+              // valueAccessor={({ item, key }) => item[key].value}
             />
+          </View>
+
+          <View style={{ marginLeft: 10 }}>
             <XAxis
-              style={{ marginHorizontal: -10, height: xAxisHeight }}
+              // style={{ marginHorizontal: -10 }}
               data={data}
-              formatLabel={(value, index) => index}
-              contentInset={{ left: 10, right: 10 }}
-              svg={axesSvg}
+              // formatLabel={(value, index) => index}
+              contentInset={contentInset}
+              svg={{ fontSize: 10, fill: "grey" }}
+              style={{ height: 10, margin: 10 }}
+              spacingInner={0.02}
             />
           </View>
         </View>
-
-        {/* <LineChart
-                style={{ height: 200 }}
-                data={data}
-                svg={{ stroke: 'rgb(134, 65, 244)' }}
-                contentInset={{ top: 20, bottom: 20 }}
-            >
-                <Grid />
-            </LineChart> */}
       </Content>
     </View>
   );
