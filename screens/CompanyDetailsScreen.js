@@ -33,6 +33,7 @@ import Colors from "../constants/Colors";
 
 const CompanyDetailsScreen = (props) => {
   const company = props.navigation.getParam("company");
+  
   const [sliderBarDividendPercentage, setSliderBarDividendPercentage] = useState(company.data.dividendPayoutRatio);
   const [sliderBarVisibleValue, setsliderBarVisibleValue] = useState(sliderBarDividendPercentage * 100)
   const [dividendReturnsYearly, setDividendReturnsYearly] = useState(company.data.dividendReturnsYearly);
@@ -242,6 +243,7 @@ const CompanyDetailsScreen = (props) => {
               contentInset={contentInset}
               svg={{ fontSize: 10, fill: "grey" }}
               style={{ height: 10, margin: 10 }}
+              spacingInner={0.02}
             />
           </View>
         </View>

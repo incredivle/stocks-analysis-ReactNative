@@ -140,10 +140,10 @@ const AddCompanyScreen = (props) => {
     );
   } else if (errorMessage != "") {
     return (
-      <Container contentContainerStyle={styles.screen}>
+      // <Container contentContainerStyle={styles.screen}>
         <ImageBackground style={styles.backgroundImage} source={background}>
-          <Content>
-            {/* <View > */}
+          {/* <Content> */}
+            <View style={styles.errorPage}>
             <Text style={styles.errorText}>{errorMessage}</Text>
             <Button
               rounded
@@ -153,10 +153,10 @@ const AddCompanyScreen = (props) => {
             >
               <Text style={styles.submitButtonText}>New Company</Text>
             </Button>
-            {/* </View> */}
-          </Content>
+            </View>
+          {/* </Content> */}
         </ImageBackground>
-      </Container>
+      // </Container>
     );
   } else if (!displayData) {
     return (
@@ -300,6 +300,13 @@ const styles = StyleSheet.create({
     height: 200,
     justifyContent: "center",
   },
+  errorPage: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: 'white',
+    borderRadius: 30,
+    padding: 20
+  },
   input: {
     color: Colors.primaryColor,
   },
@@ -330,9 +337,10 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   errorText: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
+    color: Colors.primaryColor,
+    margin: 10
+    // justifyContent: "center",
+    // alignItems: "center",
   },
 });
 
