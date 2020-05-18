@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
   View,
   FlatList,
@@ -27,30 +27,29 @@ import {
   YAxis,
   StackedBarChart,
 } from "react-native-svg-charts";
+import { Slider } from "react-native-elements";
 
 import Colors from "../constants/Colors";
 
 const CompanyDetailsScreen = (props) => {
   const company = props.navigation.getParam("company");
-
-  console.log(
-    "Max retainedEarningsYearly: ",
-    Math.max(...company.data.retainedEarningsYearly)
-  );
-  console.log("retainedEarningsYearly: ", company.data.retainedEarningsYearly);
-  console.log(
-    "Max dividendReturnsYearly: ",
-    Math.max(...company.data.dividendReturnsYearly)
-  );
-  console.log("dividendReturnsYearly: ", company.data.dividendReturnsYearly);
+  const [sliderBarDividendPercentage, setSliderBarDividendPercentage] = useState(company.data.dividendPayoutRatio);
+  const [sliderBarVisibleValue, setsliderBarVisibleValue] = useState(sliderBarDividendPercentage * 100)
+  const [dividendReturnsYearly, setDividendReturnsYearly] = useState(company.data.dividendReturnsYearly);
+  const [retainedEarningsYearly, setRetainedEarningsYearly] = useState(company.data.retainedEarningsYearly);
+  const [graphData, setGraphData] = useState([])
 
   let graphYAxisMax =
     Math.max(...company.data.retainedEarningsYearly) +
     Math.max(...company.data.dividendReturnsYearly);
 
-  // const [sliderBarDividendPercentage, setSliderBarDividendPercentage] = useState(0);
+  
 
   const adjustDividend = (sliderBarDividendPercentage) => {
+    setSliderBarDividendPercentage(sliderBarDividendPercentage);
+    setsliderBarVisibleValue(sliderBarDividendPercentage * 100);
+
+    
     // Calculate Compounding ROE : i_CompoundROE = (c_EPS - c_Dividend) / c_EPS * i_ROE
     let compoundingROE =
       ((company.data.currentEarningsPerShare - sliderBarDividendPercentage) /
@@ -64,9 +63,9 @@ const CompanyDetailsScreen = (props) => {
     // Future Earnings Per Share : i_FutureEPS = i_FuturePerShareEquity * i_ROE
     let futureEarningsPerShare = futureEquityPerShare * company.data.ROE;
 
-    retainedEarningsPerShare =
+    let retainedEarningsPerShare =
       company.data.currentEarningsPerShare * (1 - sliderBarDividendPercentage);
-    sumOfDividends =
+    let sumOfDividends =
       company.data.currentEarningsPerShare * sliderBarDividendPercentage;
 
     // After 1st year
@@ -76,22 +75,25 @@ const CompanyDetailsScreen = (props) => {
     // Now sum the retained earnings and paid out dividends
     let perShareEarning = 0;
     var counter = 0;
-    let epsReturnsYearly = [];
-    let dividendReturnsYearly = [];
-    let retainedEarningsYearly = [];
+    let epsReturnsYearlyChanged = [];
+    let dividendReturnsYearlyChanged = [];
+    let retainedEarningsYearlyChanged = [];
+
+
     while (counter < company.data.timePeriodAnalysed) {
       perShareEarning = totalEquityValue * company.data.ROE;
-      epsReturnsYearly.push(perShareEarning);
+
+      epsReturnsYearlyChanged.push(perShareEarning);
       sumOfDividends =
         sumOfDividends + perShareEarning * sliderBarDividendPercentage;
 
-      dividendReturnsYearly.push(perShareEarning * sliderBarDividendPercentage);
+      dividendReturnsYearlyChanged.push(perShareEarning * sliderBarDividendPercentage);
 
       totalEquityValue =
         totalEquityValue +
         perShareEarning * company.data.retainedEarningsPercentage;
 
-      retainedEarningsYearly.push(
+      retainedEarningsYearlyChanged.push(
         perShareEarning * company.data.retainedEarningsPercentage
       );
       counter++;
@@ -109,9 +111,12 @@ const CompanyDetailsScreen = (props) => {
         1 / company.data.timePeriodAnalysed
       ) - 1;
 
+      setDividendReturnsYearly(dividendReturnsYearlyChanged);
+      setRetainedEarningsYearly(retainedEarningsYearlyChanged);
+
     // console.log("epsReturnsYearly: ", epsReturnsYearly);
-    // console.log("dividendReturnsYearly: ", dividendReturnsYearly);
-    // console.log("retainedearningsYearly: ", retainedEarningsYearly);
+    // console.log("dividendReturnsYearly: ", dividendReturnsYearlyChanged);
+    // console.log("retainedearningsYearly: ", retainedEarningsYearlyChanged);
     // console.log("Future stock price: ", futureStockPrice);
     // console.log("Sum of dividends: ", sumOfDividends);
     // console.log(
@@ -120,69 +125,27 @@ const CompanyDetailsScreen = (props) => {
     // );
   };
 
-  adjustDividend(0.2);
+  useEffect(() => {
+    
+    let data = []
+    // Load graph data
+    for (let i = 0; i < company.data.timePeriodAnalysed; i++) {
+      let item = {
+        year: i + 1,
+        dividend: dividendReturnsYearly[i],
+        retainedEarnings: retainedEarningsYearly[i]
+      }
+      data.push(item)
+    }
+    
+    setGraphData(data)
+    
+  }, [retainedEarningsYearly, dividendReturnsYearly]);
 
-  const axesSvg = { fontSize: 10, fill: Colors.primaryColor };
-  const verticalContentInset = { top: 10, bottom: 10 }; // set this dynamically: a bit below min of array and bit above max of array
-  const xAxisHeight = 30; // set as 10 for 10 years
-  // // Labelled axis?
+  
   const contentInset = { top: 20, bottom: 20, left: 20, right: 20 };
-
-  const data = [
-    {
-      year: 1,
-      dividend: company.data.dividendReturnsYearly[0],
-      retainedEarnings: company.data.retainedEarningsYearly[0],
-    },
-    {
-      year: 2,
-      dividend: company.data.dividendReturnsYearly[1],
-      retainedEarnings: company.data.retainedEarningsYearly[1],
-    },
-    {
-      year: 3,
-      dividend: company.data.dividendReturnsYearly[2],
-      retainedEarnings: company.data.retainedEarningsYearly[2],
-    },
-    {
-      year: 4,
-      dividend: company.data.dividendReturnsYearly[3],
-      retainedEarnings: company.data.retainedEarningsYearly[3],
-    },
-    {
-      year: 5,
-      dividend: company.data.dividendReturnsYearly[4],
-      retainedEarnings: company.data.retainedEarningsYearly[4],
-    },
-    {
-      year: 6,
-      dividend: company.data.dividendReturnsYearly[5],
-      retainedEarnings: company.data.retainedEarningsYearly[5],
-    },
-    {
-      year: 7,
-      dividend: company.data.dividendReturnsYearly[6],
-      retainedEarnings: company.data.retainedEarningsYearly[6],
-    },
-    {
-      year: 8,
-      dividend: company.data.dividendReturnsYearly[7],
-      retainedEarnings: company.data.retainedEarningsYearly[7],
-    },
-    {
-      year: 9,
-      dividend: company.data.dividendReturnsYearly[8],
-      retainedEarnings: company.data.retainedEarningsYearly[8],
-    },
-    {
-      year: 9,
-      dividend: company.data.dividendReturnsYearly[9],
-      retainedEarnings: company.data.retainedEarningsYearly[9],
-    },
-  ];
-
   const colors = [Colors.primaryColor, Colors.accentColor];
-  const keys = ["retainedEarnings", "dividend" ];
+  const keys = ["retainedEarnings", "dividend"];
 
   return (
     <View style={styles.screen}>
@@ -238,13 +201,12 @@ const CompanyDetailsScreen = (props) => {
             </Body>
           </CardItem>
         </Card>
-
         <View
           style={{ height: 200, padding: 10, marginLeft: 30, marginRight: 30 }}
         >
           <View style={{ flex: 1, marginLeft: 0, marginRight: 50 }}>
             <YAxis
-              data={data}
+              data={graphData}
               contentInset={contentInset}
               svg={{
                 fill: "grey",
@@ -263,7 +225,7 @@ const CompanyDetailsScreen = (props) => {
               style={{ height: 200 }}
               keys={keys}
               colors={colors}
-              data={data}
+              data={graphData}
               showGrid={true}
               contentInset={contentInset}
               spacingInner={0.02}
@@ -275,14 +237,24 @@ const CompanyDetailsScreen = (props) => {
           <View style={{ marginLeft: 10 }}>
             <XAxis
               // style={{ marginHorizontal: -10 }}
-              data={data}
+              data={graphData}
               // formatLabel={(value, index) => index}
               contentInset={contentInset}
               svg={{ fontSize: 10, fill: "grey" }}
               style={{ height: 10, margin: 10 }}
-              spacingInner={0.02}
             />
           </View>
+        </View>
+        <View style={styles.slider}>
+          <Text style={styles.text}>Dividend Payout Percentage</Text>
+          <Slider
+            value={sliderBarDividendPercentage}
+            thumbTintColor={Colors.primaryColor}
+            minimumValue={0}
+            maximumValue={1}
+            onValueChange={(value) => adjustDividend(value)}
+          />
+          <Text style={styles.text}>{(sliderBarVisibleValue).toFixed(2)}%</Text>
         </View>
       </Content>
     </View>
@@ -313,6 +285,15 @@ const styles = StyleSheet.create({
   },
   text: {
     color: Colors.primaryColor,
+  },
+  slider: {
+    flex: 1,
+    alignItems: "stretch",
+    justifyContent: "center",
+    marginTop: 50,
+    marginLeft: 30,
+    marginRight: 30,
+    paddingBottom: 20,
   },
 });
 
