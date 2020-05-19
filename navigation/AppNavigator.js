@@ -22,9 +22,9 @@ const AppNavigator = createStackNavigator(
     },
     CompanyDetailsScreen: {
         screen: CompanyDetails,
-        navigationOptions: {
-            headerTitle: 'Company Details'
-        }
+        // navigationOptions: {
+        //     headerTitle: 'Company Details'
+        // }
     },
     
 

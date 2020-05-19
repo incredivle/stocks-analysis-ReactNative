@@ -33,24 +33,30 @@ import Colors from "../constants/Colors";
 
 const CompanyDetailsScreen = (props) => {
   const company = props.navigation.getParam("company");
-  
-  const [sliderBarDividendPercentage, setSliderBarDividendPercentage] = useState(company.data.dividendPayoutRatio);
-  const [sliderBarVisibleValue, setsliderBarVisibleValue] = useState(sliderBarDividendPercentage * 100)
-  const [dividendReturnsYearly, setDividendReturnsYearly] = useState(company.data.dividendReturnsYearly);
-  const [retainedEarningsYearly, setRetainedEarningsYearly] = useState(company.data.retainedEarningsYearly);
-  const [graphData, setGraphData] = useState([])
+
+  const [
+    sliderBarDividendPercentage,
+    setSliderBarDividendPercentage,
+  ] = useState(company.data.dividendPayoutRatio);
+  const [sliderBarVisibleValue, setsliderBarVisibleValue] = useState(
+    sliderBarDividendPercentage * 100
+  );
+  const [dividendReturnsYearly, setDividendReturnsYearly] = useState(
+    company.data.dividendReturnsYearly
+  );
+  const [retainedEarningsYearly, setRetainedEarningsYearly] = useState(
+    company.data.retainedEarningsYearly
+  );
+  const [graphData, setGraphData] = useState([]);
 
   let graphYAxisMax =
     Math.max(...company.data.retainedEarningsYearly) +
     Math.max(...company.data.dividendReturnsYearly);
 
-  
-
   const adjustDividend = (sliderBarDividendPercentage) => {
     setSliderBarDividendPercentage(sliderBarDividendPercentage);
     setsliderBarVisibleValue(sliderBarDividendPercentage * 100);
 
-    
     // Calculate Compounding ROE : i_CompoundROE = (c_EPS - c_Dividend) / c_EPS * i_ROE
     let compoundingROE =
       ((company.data.currentEarningsPerShare - sliderBarDividendPercentage) /
@@ -80,7 +86,6 @@ const CompanyDetailsScreen = (props) => {
     let dividendReturnsYearlyChanged = [];
     let retainedEarningsYearlyChanged = [];
 
-
     while (counter < company.data.timePeriodAnalysed) {
       perShareEarning = totalEquityValue * company.data.ROE;
 
@@ -88,7 +93,9 @@ const CompanyDetailsScreen = (props) => {
       sumOfDividends =
         sumOfDividends + perShareEarning * sliderBarDividendPercentage;
 
-      dividendReturnsYearlyChanged.push(perShareEarning * sliderBarDividendPercentage);
+      dividendReturnsYearlyChanged.push(
+        perShareEarning * sliderBarDividendPercentage
+      );
 
       totalEquityValue =
         totalEquityValue +
@@ -112,8 +119,8 @@ const CompanyDetailsScreen = (props) => {
         1 / company.data.timePeriodAnalysed
       ) - 1;
 
-      setDividendReturnsYearly(dividendReturnsYearlyChanged);
-      setRetainedEarningsYearly(retainedEarningsYearlyChanged);
+    setDividendReturnsYearly(dividendReturnsYearlyChanged);
+    setRetainedEarningsYearly(retainedEarningsYearlyChanged);
 
     // console.log("epsReturnsYearly: ", epsReturnsYearly);
     // console.log("dividendReturnsYearly: ", dividendReturnsYearlyChanged);
@@ -127,23 +134,20 @@ const CompanyDetailsScreen = (props) => {
   };
 
   useEffect(() => {
-    
-    let data = []
+    let data = [];
     // Load graph data
     for (let i = 0; i < company.data.timePeriodAnalysed; i++) {
       let item = {
         year: i + 1,
         dividend: dividendReturnsYearly[i],
-        retainedEarnings: retainedEarningsYearly[i]
-      }
-      data.push(item)
+        retainedEarnings: retainedEarningsYearly[i],
+      };
+      data.push(item);
     }
-    
-    setGraphData(data)
-    
+
+    setGraphData(data);
   }, [retainedEarningsYearly, dividendReturnsYearly]);
 
-  
   const contentInset = { top: 20, bottom: 20, left: 20, right: 20 };
   const colors = [Colors.primaryColor, Colors.accentColor];
   const keys = ["retainedEarnings", "dividend"];
@@ -171,17 +175,41 @@ const CompanyDetailsScreen = (props) => {
           </CardItem>
           <CardItem style={styles.card}>
             <Body>
-              <Text style={styles.text}>
-                The current stock price is $
-                {company.data.currentStockPrice.toFixed(2)}. In 10 years, the
-                future stock price is projected to be $
-                {company.data.futureStockPrice.toFixed(2)}.
-              </Text>
+              {/* FIRST ROW */}
+              <View style={styles.topRow}>
+                <View style={styles.colOne}>
+                  <Text style={styles.numberText}>
+                    ${company.data.currentStockPrice.toFixed(2)}
+                  </Text>
+                  <Text style={styles.text}>Current stock price</Text>
+                </View>
 
-              <Text style={styles.text}>
-                This generates a compounding rate of return of{" "}
-                {company.data.compoundingReturn.toFixed(2) * 100}%
-              </Text>
+                <View style={styles.colTwo}>
+                  <Text style={styles.numberText}>
+                    ${company.data.futureStockPrice.toFixed(2)}
+                  </Text>
+                  <Text style={styles.text}>
+                    Projected stock price in {company.data.timePeriodAnalysed}{" "}
+                    years
+                  </Text>
+                </View>
+              </View>
+
+              {/* SECOND ROW */}
+              <View style={styles.topRow}>
+                <View style={styles.colOne}>
+                  <Text style={styles.text}>Compounding rate of return:</Text>
+                 
+                </View>
+
+                <View style={styles.colTwo}>
+                <Text style={styles.numberText}>
+                    {company.data.compoundingReturn.toFixed(2) * 100}%
+                  </Text>
+                </View>
+              </View>
+
+             
               <Text style={styles.text}>
                 {company.data.stockName}'s current profit is $
                 {company.data.totalCurrentProfit.toFixed(2)}{" "}
@@ -256,7 +284,7 @@ const CompanyDetailsScreen = (props) => {
             maximumValue={1}
             onValueChange={(value) => adjustDividend(value)}
           />
-          <Text style={styles.text}>{(sliderBarVisibleValue).toFixed(2)}%</Text>
+          <Text style={styles.text}>{sliderBarVisibleValue.toFixed(2)}%</Text>
         </View>
       </Content>
     </View>
@@ -285,8 +313,30 @@ const styles = StyleSheet.create({
   card: {
     backgroundColor: "white",
   },
+  topRow: {
+    flexDirection: "row",
+    flex: 2,
+    // justifyContent: 'center',
+    // alignItems: 'center'
+  },
+  colOne: {
+    flex: 1,
+    alignItems: "center",
+    // justifyContent: 'center',
+  },
+  colTwo: {
+    flex: 1,
+    alignItems: "center",
+    // justifyContent: 'center',
+  },
+  numberText: {
+    fontSize: 40,
+    color: Colors.primaryColor,
+    textAlign: "center",
+  },
   text: {
     color: Colors.primaryColor,
+    textAlign: "center",
   },
   slider: {
     flex: 1,
