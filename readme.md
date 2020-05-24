@@ -1,1 +1,1 @@
-#### Invester - Stock Analysis App
+### Invester - Stock Analysis App
