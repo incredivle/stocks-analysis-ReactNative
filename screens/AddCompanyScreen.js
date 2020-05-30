@@ -31,6 +31,7 @@ import { addNewCompany } from "../store/actions/companies";
 import background from "../assets/background_image.png";
 import getEnvVars from "../environment";
 const { clearbitApiKey } = getEnvVars();
+const { iexApiKey } = getEnvVars();
 
 const AddCompanyScreen = (props) => {
   const [newCompany, setNewCompany] = useState("");
@@ -59,28 +60,44 @@ const AddCompanyScreen = (props) => {
           console.log(response.data);
 
           axios
+                .get(
+                  `https://cloud.iexapis.com/stable/stock/${newCompany}/logo?token=${iexApiKey}`
+                )
+                .then((response) => {
+                  console.log(response.data);
+                  setLogo(response.data.url);
+                })
+                .catch((errors) => {
+                  console.log(errors);
+                  setIsLoading(false);
+                  setDisplayData(true);
+                });
 
-            // The param needs to be sliced because these companies have Inc. at the end.
-            .get(
-              `https://company.clearbit.com/v1/domains/find?name=${response.data.stockName.slice(
-                0,
-                response.data.stockName.length - 5
-              )}`,
-              { headers: { Authorization: `Bearer ${clearbitApiKey}` } }
-            )
-            .then((response) => {
-              setDomain(response.data.domain);
-              setLogo(response.data.logo);
-            })
+          // axios
 
-            // Need to catch errors
-            .catch((err) => {
-              console.log(err);
-              setIsLoading(false);
-              setDisplayData(true);
+          //   // The param needs to be sliced because these companies have Inc. at the end.
+          //   .get(
+          //     `https://company.clearbit.com/v1/domains/find?name=${response.data.stockName.slice(
+          //       0,
+          //       response.data.stockName.length - 5
+          //     )}`,
+          //     { headers: { Authorization: `Bearer ${clearbitApiKey}` } }
+          //   )
+          //   .then((response) => {
+          //     setDomain(response.data.domain);
+          //     setLogo(response.data.logo);
+          //   })
 
-              return null;
-            });
+          //   // Need to catch errors
+          //   .catch((err) => {
+          //     console.log(err);
+          //     setIsLoading(false);
+          //     setDisplayData(true);
+
+          //     return null;
+          //   });
+
+
         }
       })
 
@@ -95,7 +112,7 @@ const AddCompanyScreen = (props) => {
   };
 
   useEffect(() => {
-    if (logo != "" && domain != "") {
+    if (logo != "") {
       console.log(logo);
       console.log(domain);
       setDisplayData(true);
