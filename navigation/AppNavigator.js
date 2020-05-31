@@ -26,10 +26,14 @@ const AppNavigator = createStackNavigator(
         //     headerTitle: 'Company Details'
         // }
     },
-    
+    About: {
+      screen: About,
+      navigationOptions: {
+        headerShown: false
+      }
+    }
 
-    // AddCompanyScreen: AddCompany,
-    // AboutScreen: About
+  
   },
   {
     headerMode: 'screen'

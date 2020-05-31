@@ -47,8 +47,20 @@ const HomeScreen = (props) => {
     return (
       <Container>
         <Content contentContainerStyle={styles.introScreen}>
-          <Text style={styles.buttonText}>Welcome to Invester!</Text>
-          <Text style={styles.buttonText}>Short explanation about the purpose of the app</Text>
+          <View style={styles.welcomeContainer}>
+          <Text style={styles.welcomeText}>Welcome to Invester!</Text>
+          </View>
+          
+
+          <View style={styles.questionContainer}>
+          <Text style={styles.questionText}>Do you want to know how to estimate a company's future stock price and the compounding annual return?</Text>
+          </View>
+
+          <View style={styles.welcomeContainer}>
+          
+          <Text style={styles.clickText} onPress={() => props.navigation.navigate({routeName: "About"})}>Click here to find out!</Text>
+          </View>
+          
           {/* <Button
             rounded
             style={styles.buttonOne}
@@ -194,6 +206,16 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.primaryColor
    
   },
+  welcomeContainer: {
+    paddingBottom: 30
+  },
+  welcomeText: {
+    fontSize: 50,
+    fontWeight: '200',
+    color: 'white',
+    alignItems: 'center',
+    textAlign: 'center'
+  },
   topView: {
     flex: 1,
     backgroundColor: Colors.primaryColor
@@ -205,6 +227,24 @@ const styles = StyleSheet.create({
     marginTop: 100,
     borderTopLeftRadius: 30,
     borderTopRightRadius: 30
+  },
+  questionContainer: {
+    backgroundColor: Colors.lightBlue,
+    padding: 20,
+    borderRadius: 20,
+    borderWidth: 0.5,
+    borderColor: Colors.lightBlue
+    
+  },
+  questionText: {
+    color: Colors.grey,
+    
+  },
+  clickText: {
+    fontSize: 30,
+    fontWeight: '200',
+    color: 'white',
+    paddingTop: 10
   },
   image: {
     flex: 1,
@@ -224,7 +264,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   buttonTwo: {
-    borderColor: Colors.accentColor,
+    borderColor: 'white',
     margin: 10,
     width: "50%",
     justifyContent: "center",

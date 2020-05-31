@@ -72,11 +72,15 @@ const AuthScreen = (props) => {
         behavior={Platform.OS == "ios" ? "padding" : "height"}
         style={styles.screen}
       >
-        <View style={styles.image}>
-          <Image source={logo}/>
+        <View style={styles.headerContainer}>
+          {/* <Image source={logo}/> */}
+          <Text style={styles.headerText}>Hello!</Text>
+          <Text style={styles.titleText}>Welcome to Invester!</Text>
+          <Text style={styles.titleText}>Please sign up or log in.</Text>
         </View>
 
         {/* <Content > */}
+        <View style={styles.formContainer}>
           <AuthForm
             emailValue={email}
             passwordValue={password}
@@ -106,6 +110,8 @@ const AuthScreen = (props) => {
               <Text style={styles.signUpButton}>Sign up.</Text>
             </TouchableOpacity>
           </View>
+
+          </View>
         {/* </Content> */}
       </KeyboardAvoidingView>
     );
@@ -115,8 +121,11 @@ const AuthScreen = (props) => {
         behavior={Platform.OS == "ios" ? "padding" : "height"}
         style={styles.screen}
       >
-        <View style={styles.image}>
-          <Image source={logo}/>
+       <View style={styles.headerContainer}>
+          {/* <Image source={logo}/> */}
+          <Text style={styles.headerText}>Hello!</Text>
+          <Text style={styles.titleText}>Welcome to Invester!</Text>
+          <Text style={styles.titleText}>Please sign up or log in.</Text>
         </View>
         {/* <Content > */}
           <AuthForm
@@ -167,7 +176,17 @@ const styles = StyleSheet.create({
   image: {
     alignItems: 'center',
   },
- 
+  headerContainer: {
+    // flex: 1,
+    // justifyContent: 'center',
+    alignItems: 'center',
+    // marginBottom: 20
+  },
+//  formContainer: {
+//     flex: 1,
+//     justifyContent: 'center',
+//     // alignItems: 'center'
+//  },
   submitButtonContainer: {
     // justifyContent: "center",
     alignItems: "center",
@@ -183,7 +202,7 @@ const styles = StyleSheet.create({
     marginTop: 20
   },
   submitButtonText: {
-    color: Colors.primaryColor,
+    color: 'white',
   },
   // options: {
   //   flexDirection: "row",
@@ -205,6 +224,17 @@ const styles = StyleSheet.create({
   signUpButton: {
     color: Colors.accentColor,
     fontWeight: "bold",
+  },
+  headerText: {
+    color: 'white',
+    fontSize: 40,
+    padding: 10,
+    fontWeight: '200'
+  },
+  titleText: {
+    color: 'white',
+    fontSize: 20,
+    paddingBottom: 10
   },
   changeText: {
     color: 'white'
