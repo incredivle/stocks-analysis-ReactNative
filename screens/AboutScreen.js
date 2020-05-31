@@ -21,16 +21,55 @@ const dataArray = [
 const AboutScreen = (props) => {
   return (
     <View style={styles.screen}>
-      <ImageBackground source={background} style={styles.image}>
-        <View style={styles.mainContainer}>
+      {/* <ImageBackground source={background} style={styles.image}> */}
+        {/* <View style={styles.mainContainer}> */}
           <Text style={styles.aboutTitle}>
-            About
+            How does Invester calculate the future stock price and compounding return?
             </Text>
-    <Text style={styles.aboutText}>
-      Welcome to Invester! This app is designed to help you decide what stocks to invest in. Add a new company on the 'Add'
-      page and check out its potential returns.
-      Click save to add it to your homepage. 
-    </Text>
+            <Text style={styles.subHeadingText}>
+              Tap each step to find out more.
+            </Text>
+
+          <View style={styles.stepsContainer}>
+             
+            
+          <View style={styles.step}> 
+            <Text style={styles.stepOneTitle}>
+              Step 1:
+            </Text>
+            <Text style={styles.stepOneText}>
+              Calculate the future returns and dividends using the Return on Equity Ratio
+            </Text>
+          </View>
+
+          <View style={styles.step}> 
+            <Text style={styles.stepTwoTitle}>
+              Step 1:
+            </Text>
+            <Text style={styles.stepTwoText}>
+              Calculate the future returns and dividends using the Return on Equity Ratio
+            </Text>
+          </View>
+
+          <View style={styles.step}> 
+            <Text style={styles.stepThreeTitle}>
+              Step 1:
+            </Text>
+            <Text style={styles.stepThreeText}>
+              Calculate the future returns and dividends using the Return on Equity Ratio
+            </Text>
+          </View>
+
+          <View style={styles.step}> 
+            <Text style={styles.stepFourTitle}>
+              Step 1:
+            </Text>
+            <Text style={styles.stepFourText}>
+              Calculate the future returns and dividends using the Return on Equity Ratio
+            </Text>
+          </View>
+
+          </View> 
         
         {/* <Accordion
           dataArray={dataArray}
@@ -41,9 +80,9 @@ const AboutScreen = (props) => {
 
 
 
-        <Text>Created my free logo at LogoMakr.com</Text>
-        </View>
-      </ImageBackground>
+        {/* <Text>Created my free logo at LogoMakr.com</Text> */}
+        {/* </View> */}
+      {/* </ImageBackground> */}
     </View>
   );
 };
@@ -61,25 +100,79 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     // alignItems: 'center',
-    backgroundColor: "white",
+    backgroundColor: Colors.primaryColor,
   },
   image: {
     flex: 1,
     resizeMode: "cover",
     justifyContent: "center",
   },
-  mainContainer: {
-    flex: 1,
-    backgroundColor: 'white',
-    marginTop: 100,
-    borderTopLeftRadius: 30,
-    borderTopRightRadius: 30
+  // mainContainer: {
+  //   flex: 1,
+  //   backgroundColor: 'white',
+  //   marginTop: 100,
+  //   borderTopLeftRadius: 30,
+  //   borderTopRightRadius: 30
 
-  },  
+  // },  
   aboutTitle: {
-    color: Colors.primaryColor,
+    color: 'white',
     margin: 20,
-    fontSize: 30
+    fontSize: 30,
+    fontWeight: '200',
+    textAlign: 'center'
+  },
+  subHeadingText: {
+    color: 'white',
+    textAlign: 'center',
+    fontSize: 20,
+    fontWeight: '200',
+  },
+  stepsContainer: {
+    alignItems: 'center'
+  },
+  step: {
+    backgroundColor: 'white',
+    padding: 15,
+    margin: 10,
+    width: '80%',
+    borderWidth: 0.5,
+    borderColor: 'white',
+    borderRadius: 20
+    // alignItems: 'center',
+    // justifyContent: 'center'
+  },
+  stepOneTitle: {
+    color: Colors.primaryColor,
+    fontWeight: 'bold',
+    textAlign: 'left',
+  },
+  stepOneText: {
+    color: Colors.primaryColor
+  },
+  stepTwoTitle: {
+    color: Colors.accentColor,
+    fontWeight: 'bold',
+    textAlign: 'left',
+  },
+  stepTwoText: {
+    color: Colors.accentColor
+  },
+  stepThreeTitle: {
+    color: Colors.yellow,
+    fontWeight: 'bold',
+    textAlign: 'left',
+  },
+  stepThreeText: {
+    color: Colors.yellow
+  },
+  stepFourTitle: {
+    color: Colors.red,
+    fontWeight: 'bold',
+    textAlign: 'left',
+  },
+  stepFourText: {
+    color: Colors.red
   },
   aboutText: {
     color: Colors.primaryColor,
