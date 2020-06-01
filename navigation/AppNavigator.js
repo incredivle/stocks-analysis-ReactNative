@@ -10,6 +10,10 @@ import AddCompany from "../screens/AddCompanyScreen";
 import About from "../screens/AboutScreen";
 import AuthScreen from "../screens/AuthScreen";
 import StartupScreen from "../screens/StartupScreen";
+import StepOne from "../screens/AboutSteps/StepOne";
+import StepTwo from "../screens/AboutSteps/StepTwo";
+import StepThree from "../screens/AboutSteps/StepThree";
+import StepFour from "../screens/StepFour";
 import Colors from "../constants/Colors";
 
 const AppNavigator = createStackNavigator(
@@ -41,12 +45,42 @@ const AppNavigator = createStackNavigator(
   
 );
 
+
 const NewCompanyNavigator = createStackNavigator({
   AddCompanyScreen: AddCompany,
 });
 
 const AboutNavigator = createStackNavigator({
-  AboutScreen: About,
+  AboutScreen: {
+    screen: About,
+    navigationOptions: {
+      headerShown: false
+    }
+  },
+  StepOne: {
+    screen: StepOne,
+    navigationOptions: {
+      headerShown: false
+    }
+  },
+  StepTwo: {
+    screen: StepTwo,
+    navigationOptions: {
+      headerShown: false
+    }
+  },
+  StepThree: {
+    screen: StepThree,
+    navigationOptions: {
+      headerShown: false
+    }
+  },
+  StepFour: {
+    screen: StepFour,
+    navigationOptions: {
+      headerShown: false
+    }
+  },
 });
 
 const TabNavigator = createBottomTabNavigator(
@@ -70,7 +104,7 @@ const TabNavigator = createBottomTabNavigator(
       },
     },
     About: {
-      screen: About,
+      screen: AboutNavigator,
       navigationOptions: {
         tabBarIcon: (tabInfo) => {
           return (
@@ -81,6 +115,7 @@ const TabNavigator = createBottomTabNavigator(
             />
           );
         },
+        // headerShown: false
       },
     },
   },
@@ -89,6 +124,7 @@ const TabNavigator = createBottomTabNavigator(
       activeTintColor: Colors.primaryColor,
       showLabel: true,
     },
+    resetOnBlur: true
   },
 //   {
 //       navigationOptions: {

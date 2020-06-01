@@ -6,20 +6,20 @@ import {
   StyleSheet,
   TouchableOpacity,
   ImageBackground,
+  ScrollView
 } from "react-native";
 import { Container, Header, Content, Accordion } from "native-base";
 
 import Colors from "../constants/Colors";
-import background from "../assets/background_image.png";
+import StepOne from "../screens/AboutSteps/StepOne";
+import StepTwo from "../screens/AboutSteps/StepTwo";
+import StepThree from "../screens/AboutSteps/StepThree";
+import StepFour from "../screens/StepFour";
 
-const dataArray = [
-  { title: "First Element", content: "Lorem ipsum dolor sit amet" },
-  { title: "Second Element", content: "Lorem ipsum dolor sit amet" },
-  { title: "Third Element", content: "Lorem ipsum dolor sit amet" },
-];
 
 const AboutScreen = (props) => {
   return (
+    <Content>
     <View style={styles.screen}>
       {/* <ImageBackground source={background} style={styles.image}> */}
         {/* <View style={styles.mainContainer}> */}
@@ -33,57 +33,46 @@ const AboutScreen = (props) => {
           <View style={styles.stepsContainer}>
              
             
-          <View style={styles.step}> 
+          <TouchableOpacity activeOpacity={1} style={styles.step} onPress={() => props.navigation.navigate({routeName: 'StepOne'})}> 
             <Text style={styles.stepOneTitle}>
               Step 1:
             </Text>
             <Text style={styles.stepOneText}>
-              Calculate the future returns and dividends using the Return on Equity Ratio
+            Calculate the future earnings and dividends using the Return on Equity ratio
             </Text>
-          </View>
+          </TouchableOpacity>
 
-          <View style={styles.step}> 
+          <TouchableOpacity activeOpacity={1} style={styles.step} onPress={() => props.navigation.navigate({routeName: 'StepTwo'})}> 
             <Text style={styles.stepTwoTitle}>
-              Step 1:
+            Step 2:
             </Text>
             <Text style={styles.stepTwoText}>
-              Calculate the future returns and dividends using the Return on Equity Ratio
+            Calculate the future stock price using the Price to Earnings ratio
             </Text>
-          </View>
+          </TouchableOpacity>
 
-          <View style={styles.step}> 
+          <TouchableOpacity activeOpacity={1} style={styles.step} onPress={() => props.navigation.navigate({routeName: 'StepThree'})}> 
             <Text style={styles.stepThreeTitle}>
-              Step 1:
+            Step 3:
             </Text>
             <Text style={styles.stepThreeText}>
-              Calculate the future returns and dividends using the Return on Equity Ratio
+            Calculate total returns that include dividends
             </Text>
-          </View>
+          </TouchableOpacity>
 
-          <View style={styles.step}> 
+          <TouchableOpacity activeOpacity={1} style={styles.step} onPress={() => props.navigation.navigate({routeName: 'StepFour'})}> 
             <Text style={styles.stepFourTitle}>
-              Step 1:
+            Step 4:
             </Text>
             <Text style={styles.stepFourText}>
-              Calculate the future returns and dividends using the Return on Equity Ratio
+            Calculate the compounding stock return from today's price to future price
             </Text>
-          </View>
+          </TouchableOpacity>
 
           </View> 
         
-        {/* <Accordion
-          dataArray={dataArray}
-          headerStyle={{ backgroundColor: Colors.primaryColor }}
-          contentStyle={{ backgroundColor: "white" }}
-          style={styles.accordion}
-        /> */}
-
-
-
-        {/* <Text>Created my free logo at LogoMakr.com</Text> */}
-        {/* </View> */}
-      {/* </ImageBackground> */}
     </View>
+    </Content>
   );
 };
 
