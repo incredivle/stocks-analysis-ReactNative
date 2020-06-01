@@ -10,6 +10,7 @@ import {
 } from "react-native";
 import { Container, Header, Content, Accordion } from "native-base";
 import { Ionicons } from "@expo/vector-icons";
+import { AntDesign } from "@expo/vector-icons";
 
 import Colors from "../../constants/Colors";
 
@@ -75,9 +76,9 @@ const StepOne = (props) => {
         <Text style={styles.normalText}>
           To calculate profit, turn the ROE equation around to:
         </Text>
+        <Text style={styles.blueTextBold}>Profit = ROE x Equity</Text>
       </View>
 
-      <Text style={styles.blueTextBold}>Profit = ROE x Equity</Text>
       <Text style={styles.scrollText}>Keep scrolling!</Text>
       <Ionicons
         name="ios-arrow-down"
@@ -127,6 +128,137 @@ const StepOne = (props) => {
         color="white"
         style={styles.downArrow}
       />
+
+      {/* SECTION 4  */}
+      <View style={styles.explanation}>
+        <Text style={styles.boldText}>
+          Using Return on Equity to calculate profit estimate, over 10 years:
+        </Text>
+
+        <Text style={styles.normalText}>
+          Remember, in this example half of the profit is paid out as dividends
+          each year.
+        </Text>
+
+        <Text style={styles.blueTextBoldLeft}>2020</Text>
+        <View style={styles.diagram}>
+          <Text
+            style={{
+              backgroundColor: Colors.primaryColor,
+              color: "white",
+              padding: 5,
+              marginLeft: 5,
+              width: "25%",
+              textAlign: "center",
+              justifyContent: "center",
+              paddingTop: 20,
+              paddingBottom: 20,
+            }}
+          >
+            $500M Equity
+          </Text>
+          {/* <View style={{backgroundColor: Colors.accentColor, width: '10%'}}></View>
+          <View style={{backgroundColor: Colors.lightGreen, width: '10%'}}></View> */}
+          <Text
+            style={{
+              backgroundColor: Colors.accentColor,
+              color: "white",
+              padding: 5,
+
+              width: "20%",
+              textAlign: "center",
+              justifyContent: "center",
+              paddingTop: 20,
+            }}
+          >
+            $100M Profit
+          </Text>
+          <AntDesign
+            name="arrowright"
+            size={24}
+            color={Colors.grey}
+            style={{ marginLeft: 30, paddingTop: 20 }}
+          />
+          <Text
+            style={{
+              backgroundColor: Colors.red,
+              color: "white",
+              padding: 5,
+              marginLeft: 30,
+              width: "25%",
+              textAlign: "center",
+              justifyContent: "center",
+              paddingTop: 20,
+            }}
+          >
+            {" "}
+            $50M Dividend
+          </Text>
+        </View>
+
+        <Text style={styles.blueTextBoldLeft}>2021</Text>
+        <View style={styles.diagram}>
+          <Text
+            style={{
+              backgroundColor: Colors.primaryColor,
+              color: "white",
+              padding: 5,
+              marginLeft: 5,
+              width: "30%",
+              textAlign: "center",
+              justifyContent: "center",
+              paddingTop: 20,
+              paddingBottom: 20,
+            }}
+          >
+            $500M Equity + $50M
+          </Text>
+          <Text
+            style={{
+              backgroundColor: Colors.darkBlue,
+              color: "white",
+              padding: 5,
+
+              width: "15%",
+              textAlign: "center",
+              justifyContent: "center",
+              paddingTop: 20,
+            }}
+          >
+            {" "}
+            
+          </Text>
+          <Text
+            style={{
+              backgroundColor: Colors.accentColor,
+              color: "white",
+              padding: 5,
+
+              width: "20%",
+              textAlign: "center",
+              justifyContent: "center",
+              paddingTop: 20,
+            }}
+          >
+            $110M Profit
+          </Text>
+          <Text style={styles.redBox}> $100M Dividend</Text>
+        </View>
+
+        <Text style={styles.blueTextBoldLeft}>2022</Text>
+        <View style={styles.diagram}>
+          <Text style={styles.blueBoxTwo}>$500M Equity</Text>
+          <Text style={styles.darkBlueBox}> $50M Retained Earnings</Text>
+          <Text style={styles.redBox}> $100M Dividend</Text>
+        </View>
+
+        <Text style={styles.blueTextBoldLeft}>2030</Text>
+        <View style={styles.diagram}>
+          <Text style={styles.blueBoxTwo}>$500M Equity</Text>
+          <Text style={styles.darkBlueBox}> $50M Retained Earnings</Text>
+          <Text style={styles.redBox}> $100M Dividend</Text>
+        </View>
+      </View>
     </Content>
   );
 };
@@ -179,6 +311,11 @@ const styles = StyleSheet.create({
     color: Colors.primaryColor,
     fontWeight: "bold",
     textAlign: "center",
+  },
+  blueTextBoldLeft: {
+    color: Colors.primaryColor,
+    fontWeight: "bold",
+    textAlign: "left",
   },
   blueText: {
     color: Colors.primaryColor,
@@ -258,13 +395,13 @@ const styles = StyleSheet.create({
     textAlign: "right",
     maxWidth: "30%",
     marginLeft: 200,
-    padding: 10
+    padding: 10,
   },
   leftText: {
     color: Colors.grey,
     padding: 15,
-    textAlign: 'left',
-    maxWidth: '80%'
+    textAlign: "left",
+    maxWidth: "80%",
   },
   stepsContainer: {
     alignItems: "center",
