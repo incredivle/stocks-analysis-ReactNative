@@ -3,6 +3,7 @@ import {
   View,
   Text,
   StyleSheet,
+  TouchableOpacity
 } from "react-native";
 import { Content } from "native-base";
 import { Ionicons } from "@expo/vector-icons";
@@ -53,7 +54,7 @@ const StepFour = (props) => {
         style={{
           backgroundColor: Colors.accentColor,
           marginTop: 30,
-          marginBottom: 150,
+          marginBottom: 110,
           padding: 20,
           borderWidth: 0.5,
           borderColor: Colors.accentColor,
@@ -75,6 +76,10 @@ const StepFour = (props) => {
           Click on the Add button below to start analysing a company!
         </Text>
       </View>
+
+      <TouchableOpacity onPress={() => props.navigation.goBack()} style={{paddingBottom: 40}}>
+          <Text style={styles.scrollText}>Back</Text>
+        </TouchableOpacity>
     </Content>
   );
 };
