@@ -148,27 +148,28 @@ const StepOne = (props) => {
               color: "white",
               padding: 5,
               marginLeft: 5,
-              width: "25%",
+              width: "20%",
               textAlign: "center",
               justifyContent: "center",
               paddingTop: 20,
               paddingBottom: 20,
+              fontSize: 12
             }}
           >
             $500M Equity
           </Text>
-          {/* <View style={{backgroundColor: Colors.accentColor, width: '10%'}}></View>
-          <View style={{backgroundColor: Colors.lightGreen, width: '10%'}}></View> */}
+          
           <Text
             style={{
               backgroundColor: Colors.accentColor,
               color: "white",
               padding: 5,
 
-              width: "20%",
+              width: "17%",
               textAlign: "center",
               justifyContent: "center",
               paddingTop: 20,
+              fontSize: 12
             }}
           >
             $100M Profit
@@ -184,15 +185,16 @@ const StepOne = (props) => {
               backgroundColor: Colors.red,
               color: "white",
               padding: 5,
-              marginLeft: 30,
-              width: "25%",
+              marginLeft: 80,
+              width: "15%",
               textAlign: "center",
               justifyContent: "center",
               paddingTop: 20,
+              fontSize: 12
             }}
           >
             {" "}
-            $50M Dividend
+            $50M Div
           </Text>
         </View>
 
@@ -204,11 +206,12 @@ const StepOne = (props) => {
               color: "white",
               padding: 5,
               marginLeft: 5,
-              width: "30%",
+              width: "25%",
               textAlign: "center",
               justifyContent: "center",
               paddingTop: 20,
               paddingBottom: 20,
+              fontSize: 12,
             }}
           >
             $500M Equity + $50M
@@ -219,10 +222,11 @@ const StepOne = (props) => {
               color: "white",
               padding: 5,
 
-              width: "15%",
+              width: "12%",
               textAlign: "center",
               justifyContent: "center",
               paddingTop: 20,
+              fontSize: 12,
             }}
           >
             {" "}
@@ -238,27 +242,170 @@ const StepOne = (props) => {
               textAlign: "center",
               justifyContent: "center",
               paddingTop: 20,
+              fontSize: 12,
             }}
           >
             $110M Profit
           </Text>
-          <Text style={styles.redBox}> $100M Dividend</Text>
+          <AntDesign
+            name="arrowright"
+            size={24}
+            color={Colors.grey}
+            style={{ marginLeft: 20, paddingTop: 20 }}
+          />
+          <Text
+            style={{
+              backgroundColor: Colors.red,
+              color: "white",
+              padding: 5,
+              marginLeft: 32,
+              width: "15%",
+              textAlign: "center",
+              justifyContent: "center",
+              paddingTop: 20,
+              fontSize: 12
+            }}
+          >
+            {" "}
+            $55M Div
+          </Text>
         </View>
 
         <Text style={styles.blueTextBoldLeft}>2022</Text>
         <View style={styles.diagram}>
-          <Text style={styles.blueBoxTwo}>$500M Equity</Text>
-          <Text style={styles.darkBlueBox}> $50M Retained Earnings</Text>
-          <Text style={styles.redBox}> $100M Dividend</Text>
+          <Text
+            style={{
+              backgroundColor: Colors.primaryColor,
+              color: "white",
+              padding: 5,
+              marginLeft: 5,
+              width: "28%",
+              textAlign: "center",
+              justifyContent: "center",
+              paddingTop: 20,
+              paddingBottom: 20,
+              fontSize: 12,
+            }}
+          >
+            $500M Equity + $50M
+          </Text>
+          <Text
+            style={{
+              backgroundColor: Colors.darkBlue,
+              color: "white",
+              padding: 5,
+
+              width: "15%",
+              textAlign: "center",
+              justifyContent: "center",
+              paddingTop: 20,
+              fontSize: 12,
+            }}
+          >
+            {" "}
+            
+          </Text>
+          <Text
+            style={{
+              backgroundColor: Colors.accentColor,
+              color: "white",
+              padding: 5,
+
+              width: "23%",
+              textAlign: "center",
+              justifyContent: "center",
+              paddingTop: 20,
+              fontSize: 12,
+            }}
+          >
+            $110M Profit
+          </Text>
+          <AntDesign
+            name="arrowright"
+            size={24}
+            color={Colors.grey}
+            style={{ marginLeft: 10, paddingTop: 20 }}
+          />
+          <Text
+            style={{
+              backgroundColor: Colors.red,
+              color: "white",
+              padding: 5,
+              marginLeft: 10,
+              width: "18%",
+              textAlign: "center",
+              justifyContent: "center",
+              paddingTop: 20,
+              fontSize: 12
+            }}
+          >
+            {" "}
+            $60.5M Div
+          </Text>
         </View>
+
+        <Text style={styles.normalText}>After 10 years</Text>
 
         <Text style={styles.blueTextBoldLeft}>2030</Text>
         <View style={styles.diagram}>
-          <Text style={styles.blueBoxTwo}>$500M Equity</Text>
-          <Text style={styles.darkBlueBox}> $50M Retained Earnings</Text>
-          <Text style={styles.redBox}> $100M Dividend</Text>
+          <Text
+            style={{
+              backgroundColor: Colors.primaryColor,
+              color: "white",
+              padding: 5,
+              marginLeft: 5,
+              width: "45%",
+              textAlign: "center",
+              justifyContent: "center",
+              paddingTop: 20,
+              paddingBottom: 20,
+              fontSize: 12
+            }}
+          >
+            $1,296M Equity
+          </Text>
+          
+          <Text
+            style={{
+              backgroundColor: Colors.accentColor,
+              color: "white",
+              padding: 5,
+
+              width: "30%",
+              textAlign: "center",
+              justifyContent: "center",
+              paddingTop: 20,
+              fontSize: 12
+            }}
+          >
+            $259M Profit
+          </Text>
+         
+          <Text
+            style={{
+              backgroundColor: Colors.red,
+              color: "white",
+              padding: 5,
+              marginLeft: 15,
+              width: "20%",
+              textAlign: "center",
+              justifyContent: "center",
+              paddingTop: 15,
+              fontSize: 12
+            }}
+          >
+            {" "}
+            $926M Total Div
+          </Text>
         </View>
+
+       
+
       </View>
+
+      <TouchableOpacity onPress={() => props.navigation.goBack()} style={{paddingBottom: 40}}>
+          <Text style={styles.scrollText}>Back</Text>
+        </TouchableOpacity>
     </Content>
   );
 };
@@ -316,6 +463,7 @@ const styles = StyleSheet.create({
     color: Colors.primaryColor,
     fontWeight: "bold",
     textAlign: "left",
+    marginLeft: 5
   },
   blueText: {
     color: Colors.primaryColor,
@@ -332,6 +480,7 @@ const styles = StyleSheet.create({
   },
   diagram: {
     flexDirection: "row",
+    paddingBottom: 5
   },
   blueBox: {
     backgroundColor: Colors.primaryColor,
