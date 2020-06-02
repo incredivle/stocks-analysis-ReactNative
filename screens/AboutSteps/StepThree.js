@@ -2,15 +2,12 @@ import React from "react";
 import {
   View,
   Text,
-  FlatList,
   StyleSheet,
   TouchableOpacity,
-  ImageBackground,
-  ScrollView,
+
 } from "react-native";
 import { Container, Header, Content, Accordion } from "native-base";
-import { Ionicons } from "@expo/vector-icons";
-import { AntDesign } from "@expo/vector-icons";
+
 
 import Colors from "../../constants/Colors";
 

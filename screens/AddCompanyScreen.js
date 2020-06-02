@@ -59,43 +59,47 @@ const AddCompanyScreen = (props) => {
           setCompanyData(response.data);
           console.log(response.data);
 
-          axios
-                .get(
-                  `https://cloud.iexapis.com/stable/stock/${newCompany}/logo?token=${iexApiKey}`
-                )
-                .then((response) => {
-                  console.log(response.data);
-                  setLogo(response.data.url);
-                })
-                .catch((errors) => {
-                  console.log(errors);
-                  setIsLoading(false);
-                  setDisplayData(true);
-                });
+          // setIsLoading(false);
+          // setDisplayData(true);
 
           // axios
+          //       .get(
+          //         `https://cloud.iexapis.com/stable/stock/${newCompany}/logo?token=${iexApiKey}`
+          //       )
+          //       .then((response) => {
+          //         console.log(response.data);
+          //         setLogo(response.data.url);
+          //       })
+          //       .catch((errors) => {
+          //         console.log(errors);
+          //         setIsLoading(false);
+          //         setDisplayData(true);
+          //         return null
+          //       });
 
-          //   // The param needs to be sliced because these companies have Inc. at the end.
-          //   .get(
-          //     `https://company.clearbit.com/v1/domains/find?name=${response.data.stockName.slice(
-          //       0,
-          //       response.data.stockName.length - 5
-          //     )}`,
-          //     { headers: { Authorization: `Bearer ${clearbitApiKey}` } }
-          //   )
-          //   .then((response) => {
-          //     setDomain(response.data.domain);
-          //     setLogo(response.data.logo);
-          //   })
+          axios
 
-          //   // Need to catch errors
-          //   .catch((err) => {
-          //     console.log(err);
-          //     setIsLoading(false);
-          //     setDisplayData(true);
+            // The param needs to be sliced because these companies have Inc. at the end.
+            .get(
+              `https://company.clearbit.com/v1/domains/find?name=${response.data.stockName.slice(
+                0,
+                response.data.stockName.length - 5
+              )}`,
+              { headers: { Authorization: `Bearer ${clearbitApiKey}` } }
+            )
+            .then((response) => {
+              setDomain(response.data.domain);
+              setLogo(response.data.logo);
+            })
 
-          //     return null;
-          //   });
+            // Need to catch errors
+            .catch((err) => {
+              console.log(err);
+              setIsLoading(false);
+              setDisplayData(true);
+
+              return null;
+            });
 
 
         }
@@ -158,8 +162,8 @@ const AddCompanyScreen = (props) => {
   } else if (errorMessage != "") {
     return (
       // <Container contentContainerStyle={styles.screen}>
-        <ImageBackground style={styles.backgroundImage} source={background}>
-          {/* <Content> */}
+        
+          <Content>
             <View style={styles.errorPage}>
             <Text style={styles.errorText}>{errorMessage}</Text>
             <Button
@@ -171,8 +175,8 @@ const AddCompanyScreen = (props) => {
               <Text style={styles.submitButtonText}>New Company</Text>
             </Button>
             </View>
-          {/* </Content> */}
-        </ImageBackground>
+          </Content>
+        
       // </Container>
     );
   } else if (!displayData) {
@@ -181,7 +185,7 @@ const AddCompanyScreen = (props) => {
         behavior={Platform.OS == "ios" ? "padding" : "height"}
         style={styles.screen}
       >
-        <ImageBackground style={styles.backgroundImage} source={background}>
+        
           <View style={styles.outerFormContainer}>
             <View style={styles.formContainer}>
               {/* <Container>
@@ -215,7 +219,7 @@ const AddCompanyScreen = (props) => {
             {/* </Content>
       </Container> */}
           </View>
-        </ImageBackground>
+        
       </KeyboardAvoidingView>
     );
   } else {
@@ -290,15 +294,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
   },
-  image: {
-    width: 150,
-    height: 58,
-  },
-  backgroundImage: {
-    flex: 1,
-    resizeMode: "cover",
-    justifyContent: "center",
-  },
+  
   screen: {
     flex: 1,
     justifyContent: "center",
@@ -320,7 +316,7 @@ const styles = StyleSheet.create({
   errorPage: {
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: 'white',
+    backgroundColor: Colors.accentColor,
     borderRadius: 30,
     padding: 20
   },

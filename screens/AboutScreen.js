@@ -60,7 +60,7 @@ const AboutScreen = (props) => {
             </Text>
           </TouchableOpacity>
 
-          <TouchableOpacity activeOpacity={1} style={styles.step} onPress={() => props.navigation.navigate({routeName: 'StepFour'})}> 
+          <TouchableOpacity activeOpacity={1} style={styles.lastStep} onPress={() => props.navigation.navigate({routeName: 'StepFour'})}> 
             <Text style={styles.stepFourTitle}>
             Step 4:
             </Text>
@@ -130,6 +130,16 @@ const styles = StyleSheet.create({
     borderRadius: 20
     // alignItems: 'center',
     // justifyContent: 'center'
+  },
+  lastStep: {
+    backgroundColor: 'white',
+    padding: 15,
+    margin: 10,
+    width: '80%',
+    borderWidth: 0.5,
+    borderColor: 'white',
+    borderRadius: 20,
+    marginBottom: 50
   },
   stepOneTitle: {
     color: Colors.primaryColor,

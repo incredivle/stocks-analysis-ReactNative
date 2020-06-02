@@ -2,15 +2,11 @@ import React from "react";
 import {
   View,
   Text,
-  FlatList,
   StyleSheet,
-  TouchableOpacity,
-  ImageBackground,
-  ScrollView,
 } from "react-native";
-import { Container, Header, Content, Accordion, Button } from "native-base";
+import { Content } from "native-base";
 import { Ionicons } from "@expo/vector-icons";
-import { AntDesign } from "@expo/vector-icons";
+
 
 import Colors from "../../constants/Colors";
 
@@ -50,7 +46,7 @@ const StepFour = (props) => {
         </Text>
       </View>
 
-      <Text style={styles.scrollText}>Well done!</Text>
+      <Text style={styles.endText}>Well done!</Text>
       <Text style={{ color: "white" }}>Let's start using the app!</Text>
 
       <View
@@ -138,6 +134,12 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   scrollText: {
+    color: "white",
+    fontWeight: "200",
+    fontSize: 20,
+    marginTop: 50,
+  },
+  endText: {
     color: "white",
     fontWeight: "200",
     fontSize: 30,
