@@ -13,7 +13,7 @@ import StartupScreen from "../screens/StartupScreen";
 import StepOne from "../screens/AboutSteps/StepOne";
 import StepTwo from "../screens/AboutSteps/StepTwo";
 import StepThree from "../screens/AboutSteps/StepThree";
-import StepFour from "../screens/StepFour";
+import StepFour from "../screens/AboutSteps/StepFour";
 import Colors from "../constants/Colors";
 
 const AppNavigator = createStackNavigator(

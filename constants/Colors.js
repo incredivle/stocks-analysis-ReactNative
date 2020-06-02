@@ -6,5 +6,8 @@ export default {
     red: '#DE613F',
     darkBlue: '#2C79B1',
     lightGreen: '#8ADBAA',
-    yellow: '#F4BD3C'
+    yellow: '#F4BD3C',
+    nonBlueBackground: '#DBF3E5',
+    nonYellowBackground: '#FCF1D8',
+    nonRedBackground: '#F8DFD8'
   };

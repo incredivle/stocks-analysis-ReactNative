@@ -106,7 +106,7 @@ const StepOne = (props) => {
         <View style={styles.diagram}>
           <Text style={styles.blueBoxTwo}>$500M Equity</Text>
           <Text style={styles.darkBlueBox}> $50M Retained Earnings</Text>
-          <Text style={styles.redBox}> $100M Dividend</Text>
+          <Text style={styles.redBox}> $50M Dividend</Text>
         </View>
 
         <Text style={styles.leftText}>
@@ -153,7 +153,8 @@ const StepOne = (props) => {
               justifyContent: "center",
               paddingTop: 20,
               paddingBottom: 20,
-              fontSize: 12
+              fontSize: 12,
+              height: 70
             }}
           >
             $500M Equity
@@ -164,7 +165,7 @@ const StepOne = (props) => {
               backgroundColor: Colors.accentColor,
               color: "white",
               padding: 5,
-
+              height: 70,
               width: "17%",
               textAlign: "center",
               justifyContent: "center",
@@ -189,8 +190,9 @@ const StepOne = (props) => {
               width: "15%",
               textAlign: "center",
               justifyContent: "center",
-              paddingTop: 20,
-              fontSize: 12
+              paddingTop: 10,
+              fontSize: 12,
+              height: 70
             }}
           >
             {" "}
@@ -206,12 +208,13 @@ const StepOne = (props) => {
               color: "white",
               padding: 5,
               marginLeft: 5,
-              width: "25%",
+              width: "31%",
               textAlign: "center",
               justifyContent: "center",
               paddingTop: 20,
               paddingBottom: 20,
               fontSize: 12,
+              height: 70
             }}
           >
             $500M Equity + $50M
@@ -221,8 +224,8 @@ const StepOne = (props) => {
               backgroundColor: Colors.darkBlue,
               color: "white",
               padding: 5,
-
-              width: "12%",
+              height: 70,
+              width: "8%",
               textAlign: "center",
               justifyContent: "center",
               paddingTop: 20,
@@ -237,8 +240,8 @@ const StepOne = (props) => {
               backgroundColor: Colors.accentColor,
               color: "white",
               padding: 5,
-
-              width: "20%",
+              height: 70,
+              width: "18%",
               textAlign: "center",
               justifyContent: "center",
               paddingTop: 20,
@@ -262,8 +265,9 @@ const StepOne = (props) => {
               width: "15%",
               textAlign: "center",
               justifyContent: "center",
-              paddingTop: 20,
-              fontSize: 12
+              paddingTop: 10,
+              fontSize: 12,
+              height: 70
             }}
           >
             {" "}
@@ -279,12 +283,13 @@ const StepOne = (props) => {
               color: "white",
               padding: 5,
               marginLeft: 5,
-              width: "28%",
+              width: "32%",
               textAlign: "center",
               justifyContent: "center",
               paddingTop: 20,
               paddingBottom: 20,
               fontSize: 12,
+              height: 70
             }}
           >
             $500M Equity + $50M
@@ -294,8 +299,8 @@ const StepOne = (props) => {
               backgroundColor: Colors.darkBlue,
               color: "white",
               padding: 5,
-
-              width: "15%",
+              height: 70,
+              width: "11%",
               textAlign: "center",
               justifyContent: "center",
               paddingTop: 20,
@@ -310,7 +315,7 @@ const StepOne = (props) => {
               backgroundColor: Colors.accentColor,
               color: "white",
               padding: 5,
-
+              height: 70,
               width: "23%",
               textAlign: "center",
               justifyContent: "center",
@@ -318,7 +323,7 @@ const StepOne = (props) => {
               fontSize: 12,
             }}
           >
-            $110M Profit
+            $121M Profit
           </Text>
           <AntDesign
             name="arrowright"
@@ -335,8 +340,9 @@ const StepOne = (props) => {
               width: "18%",
               textAlign: "center",
               justifyContent: "center",
-              paddingTop: 20,
-              fontSize: 12
+              paddingTop: 10,
+              fontSize: 12,
+              height: 70
             }}
           >
             {" "}
@@ -357,9 +363,10 @@ const StepOne = (props) => {
               width: "45%",
               textAlign: "center",
               justifyContent: "center",
-              paddingTop: 20,
+              paddingTop: 26,
               paddingBottom: 20,
-              fontSize: 12
+              fontSize: 12,
+              height: 70,
             }}
           >
             $1,296M Equity
@@ -370,11 +377,11 @@ const StepOne = (props) => {
               backgroundColor: Colors.accentColor,
               color: "white",
               padding: 5,
-
+              height: 70,
               width: "30%",
               textAlign: "center",
               justifyContent: "center",
-              paddingTop: 20,
+              paddingTop: 26,
               fontSize: 12
             }}
           >
@@ -390,8 +397,9 @@ const StepOne = (props) => {
               width: "20%",
               textAlign: "center",
               justifyContent: "center",
-              paddingTop: 15,
-              fontSize: 12
+              paddingTop: 20,
+              fontSize: 12,
+              height: 70,
             }}
           >
             {" "}

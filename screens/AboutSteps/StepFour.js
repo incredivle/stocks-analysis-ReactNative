@@ -8,65 +8,82 @@ import {
   ImageBackground,
   ScrollView,
 } from "react-native";
-import { Container, Header, Content, Accordion } from "native-base";
+import { Container, Header, Content, Accordion, Button } from "native-base";
 import { Ionicons } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
 
 import Colors from "../../constants/Colors";
 
-const StepThree = (props) => {
+const StepFour = (props) => {
   return (
     <Content contentContainerStyle={styles.screen}>
       {/* SECTION ONE    */}
       <View style={styles.stepOneBackground}>
-        <Text style={styles.stepOneTitle}>Step 3:</Text>
+        <Text style={styles.stepOneTitle}>Step 4:</Text>
         <Text style={styles.stepOneText}>
-          Now we can calculate the total return by including all the dividends
-          with the future stock price.
+          What is the annual return to make a stock go from $20 to $70.41 over a
+          10 year period?
         </Text>
       </View>
 
       <View style={styles.explanation}>
-        <Text style={styles.normalText}>
-          We've just calculated the future stock price as $51.90.
+        <Text style={{ color: Colors.red, fontWeight: "bold", padding: 5 }}>
+          Compounding Return = (Future stock price / current stock price)^(1 /
+          time period) - 1
         </Text>
-
-        <Text style={styles.normalText}>
-          The sum of dividends over the 10 years totals $926M. Since the company
-          has 50M shares, the total dividends per share = $18.53.
-        </Text>
-
-        <Text style={styles.normalText}>
-          The total return for this stock is the sum of the future stock price
-          and the dividends per share. In this example, the total = $70.43.
-        </Text>
-
-        <View style={styles.diagram}>
-          <Text style={styles.greenBox}>$51.90 Future Price</Text>
-          <Text
-            style={{ color: Colors.grey, fontWeight: "bold", paddingTop: 22 }}
-          >
-            +
-          </Text>
-          <Text style={styles.redBox}>$18.53 Div</Text>
-          <Text style={{ color: Colors.yellow, fontWeight: "bold", paddingTop: 22 }}>
-            {" "}
-            = $70.43
-          </Text>
-        </View>
+        <Text style={styles.boldText}>Answer: 13.41%</Text>
       </View>
 
-      <TouchableOpacity
-        onPress={() => props.navigation.goBack()}
-        style={{ paddingBottom: 40 }}
+      <Text style={styles.scrollText}>Keep scrolling!</Text>
+      <Ionicons
+        name="ios-arrow-down"
+        size={24}
+        color="white"
+        style={styles.downArrow}
+      />
+
+      <View style={styles.final}>
+        <Text style={styles.normalText}>
+          We estimated the future stock price would increase from $20 to $51.87.
+          The compounding return, including dividends over a 10 year period was
+          13.41%.
+        </Text>
+      </View>
+
+      <Text style={styles.scrollText}>Well done!</Text>
+      <Text style={{ color: "white" }}>Let's start using the app!</Text>
+
+      <View
+        style={{
+          backgroundColor: Colors.accentColor,
+          marginTop: 30,
+          marginBottom: 150,
+          padding: 20,
+          borderWidth: 0.5,
+          borderColor: Colors.accentColor,
+          borderRadius: 20,
+          maxWidth: '80%'
+        }}
       >
-        <Text style={styles.scrollText}>Back</Text>
-      </TouchableOpacity>
+        <Text
+          style={{
+            color: "white",
+            fontSize: 20,
+            backgroundColor: Colors.accentColor,
+            textAlign: 'center',
+            fontWeight: '200',
+            padding: 5,
+            
+          }}
+        >
+          Click on the Add button below to start analysing a company!
+        </Text>
+      </View>
     </Content>
   );
 };
 
-StepThree.navigationOptions = {
+StepFour.navigationOptions = {
   headerTitle: "About",
   headerStyle: {
     backgroundColor: Platform.OS === "android" ? Colors.primaryColor : "",
@@ -79,10 +96,10 @@ const styles = StyleSheet.create({
     // flex: 1,
     // justifyContent: "center",
     alignItems: "center",
-    backgroundColor: Colors.yellow,
+    backgroundColor: Colors.red,
   },
   stepOneBackground: {
-    backgroundColor: Colors.nonYellowBackground,
+    backgroundColor: Colors.nonRedBackground,
     width: "90%",
     borderWidth: 0.5,
     borderColor: Colors.lightBlue,
@@ -98,7 +115,17 @@ const styles = StyleSheet.create({
     borderColor: Colors.lightBlue,
     borderRadius: 20,
     padding: 20,
-    marginTop: 20,
+    marginTop: 40,
+    marginBottom: 20,
+  },
+  final: {
+    backgroundColor: "white",
+    width: "90%",
+    borderWidth: 0.5,
+    borderColor: Colors.lightBlue,
+    borderRadius: 20,
+    padding: 20,
+    marginTop: 100,
     marginBottom: 20,
   },
   normalText: {
@@ -113,7 +140,7 @@ const styles = StyleSheet.create({
   scrollText: {
     color: "white",
     fontWeight: "200",
-    fontSize: 20,
+    fontSize: 30,
     marginTop: 50,
   },
   downArrow: {
@@ -122,7 +149,7 @@ const styles = StyleSheet.create({
   diagram: {
     flexDirection: "row",
     paddingBottom: 5,
-    justifyContent: 'center'
+    justifyContent: "center",
   },
 
   greenBox: {
@@ -216,4 +243,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default StepThree;
+export default StepFour;

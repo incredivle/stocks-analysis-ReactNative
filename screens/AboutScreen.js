@@ -14,7 +14,7 @@ import Colors from "../constants/Colors";
 import StepOne from "../screens/AboutSteps/StepOne";
 import StepTwo from "../screens/AboutSteps/StepTwo";
 import StepThree from "../screens/AboutSteps/StepThree";
-import StepFour from "../screens/StepFour";
+import StepFour from "./AboutSteps/StepFour";
 
 
 const AboutScreen = (props) => {

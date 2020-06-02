@@ -57,29 +57,22 @@ const HomeScreen = (props) => {
           </View>
 
           <View style={styles.welcomeContainer}>
+
+          <Button
+                rounded
+                bordered
+                style={{backgroundColor: Colors.accentColor, borderColor: Colors.accentColor, padding: 20, margin: 20}}
+                onPress={() => {
+                  props.navigation.navigate({routeName: "About"})
+                }}
+              >
+                <Text style={styles.clickText}>Click here to find out!</Text>
+              </Button>
           
-          <Text style={styles.clickText} onPress={() => props.navigation.navigate({routeName: "About"})}>Click here to find out!</Text>
+          
           </View>
           
-          {/* <Button
-            rounded
-            style={styles.buttonOne}
-            onPress={() => {
-              props.navigation.navigate({ routeName: "AddCompanyScreen" });
-            }}
-          >
-            <Text style={styles.buttonText}>New Company</Text>
-          </Button>
-          <Button
-            rounded
-            bordered
-            style={styles.buttonTwo}
-            onPress={() => {
-              props.navigation.navigate({ routeName: "AboutScreen" });
-            }}
-          >
-            <Text style={styles.buttonText}>More Info</Text>
-          </Button> */}
+        
           <Button
             rounded
             bordered
@@ -241,10 +234,10 @@ const styles = StyleSheet.create({
     
   },
   clickText: {
-    fontSize: 30,
-    fontWeight: '200',
+    fontSize: 20,
+    
     color: 'white',
-    paddingTop: 10
+    
   },
   image: {
     flex: 1,
